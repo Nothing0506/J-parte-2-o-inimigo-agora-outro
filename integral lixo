@@ -1,0 +1,17 @@
+#include <iostream>
+#include<math.h>
+
+using namespace std;
+
+int altura(float n1, float n2){
+	return n2-n1;
+}
+
+int main() {
+	float n1, n2, h;
+	n1=0;
+	n2=1;
+ h=altura(n1, n2);
+ cout<<"H vale "<<h<<endl;
+	
+}
