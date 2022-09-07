@@ -1,0 +1,25 @@
+#include <iostream>
+#include<math.h>
+
+using namespace std;
+
+float n, x1, x2, b, y, yant, t, A, pi, c,d;
+
+int main() {
+ cout<<"Digite o numero de particoes"<<endl;
+    cin>>n;
+    x2=1, x1=0;
+    b=x2-x1;
+    t=x2/n;
+    yant=0;
+    A=0;
+        for(float i=0; i<x2; i=i+t){
+           y=1/(1+i*i);
+           c=x1+i;
+           A=-(0.5*(y-yant)*(c-d)*t)+(c-d)*y+A;
+           yant=y;
+           d=c;
+        }
+    pi=4*A;
+    cout<<"O valor de pi e aproximadademente "<<pi<<endl;
+}
