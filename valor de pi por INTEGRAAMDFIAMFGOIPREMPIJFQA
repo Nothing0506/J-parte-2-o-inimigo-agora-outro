@@ -1,0 +1,28 @@
+#include <iostream>
+#include<math.h>
+
+using namespace std;
+
+long double funPI(long double n){
+long double x, y1, y2, soma, p;
+x=0, y2=0, soma=0;
+p=1/n;
+    for(long double i=0; i<1; i=i+p){
+        y1=(1/(1+i*i));
+      soma=((y1+y2)*p)/2 + soma;
+      y2=y1;
+    }
+    return 4*soma;
+}
+
+int main() {
+long double n, r, h, A;
+cout<<"Digita o valor de divisoes"<<endl;
+cin>>n;
+cout<<"Digite o raio do cilindro"<<endl;
+cin>>r;
+cout<<"Digite a altura"<<endl;
+cin>>h;
+A=funPI(n)*r*r*h;
+cout<<"A area do cinlindro e "<<A<<endl;
+}
