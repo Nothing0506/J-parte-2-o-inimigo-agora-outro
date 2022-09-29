@@ -1,0 +1,29 @@
+#include <iostream>
+#include<math.h>
+
+using namespace std;
+
+float regr(float n){
+float x, X, y, Y, xy, x2;
+X=0, y=0;
+
+    do{
+        cout<<"Informe o X"<<endl;
+        cin>>x;
+        X=x+X;
+        x2=x2+x*x;
+        cout<<"Informe o Y"<<endl;
+        cin>>y;
+        Y=y+Y;
+        xy=xy+x*y;
+    }
+    
+}
+
+
+int main(){
+float n;
+cout<<"Digite quantos dados serao inseridos"<<endl;
+cin>>n;
+    
+}
