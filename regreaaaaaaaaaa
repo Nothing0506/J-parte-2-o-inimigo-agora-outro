@@ -3,10 +3,9 @@
 
 using namespace std;
 
-float regr(float n){
-float x, X, y, Y, xy, x2;
-X=0, y=0;
-
+void regr(float n){// calcula todas as operações com X e Y necessárias para determinação de A e B
+float a, b, x, X, y, Y, xy, x2, t;
+X=0, y=0, t=0;
     do{
         cout<<"Informe o X"<<endl;
         cin>>x;
@@ -16,14 +15,15 @@ X=0, y=0;
         cin>>y;
         Y=y+Y;
         xy=xy+x*y;
-    }
-    
+        t++;
+    }while(t<n);
+        a=(n*xy-X*Y)/(n*x2-X*X);
+        b=(Y*x2-X*xy)/(n*x2-X*X);
+      cout<<"O valor de a e:"<<a<<" e o valor de b e: "<<b<<endl;
 }
-
-
 int main(){
 float n;
 cout<<"Digite quantos dados serao inseridos"<<endl;
 cin>>n;
-    
+regr(n);
 }
