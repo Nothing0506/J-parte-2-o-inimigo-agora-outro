@@ -1,1 +1,20 @@
+#include<iostream>
+using namespace std;
 
+void raiz(float y, float n){//função que tira a raiz pelo metodo de newton
+float x;
+    x=y/2;
+        for(int i=0; i<n; i++){
+            x=(x*x+y)/(2*x);//calcula o novo valor de x de acordo com os antigos valores
+        }
+    cout<<"O valor da raiz de "<<y<<" aproximado "<<n<<" vezes e igual a "<<x<<endl;
+}
+
+int main(){
+float y, n;
+    cout<<"Qual e o numero o qual se deseja tirar a raiz?"<<endl;
+        cin>>y;//recebe o numero que vai ser retirada a raiz quadrada
+    cout<<"Quantas vezes deve ser feita a aproximacao?"<<endl;
+        cin>>n;//recebe o numero de vezes que a aproximação deve ser feita
+    raiz(y, n);
+}
