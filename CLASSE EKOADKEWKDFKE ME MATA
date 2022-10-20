@@ -21,29 +21,37 @@ class Calculo{
     float Volu(long double raio, long double h){
         return valorPI()*raio*raio*h;
     }
+     private:
+        float b;
     public:
         float a, c;
-    private:
-        float b;
-    void valorRAIZ(float a, float b, float c){
+    float valorRAIZ(float a, float c){
             b=c/2;
         for(int i=0; i<a; i++){
             b=(b*b+c)/(2*b);//calcula o novo valor de x de acordo com os antigos valores
         }
-        cout<<"O valor da raiz do numero "<<c<<" e igual a"<<b<<endl;   
+        return b;
     }
 };
 int main() {
     int op;
-    Calculo volume, raiz;
+    Calculo z;
         cout<<"Deseja calcular a raiz ou calcular o volume de um cilindro?"<<endl;
         cout<<"1 para RAIZ, 2 para CILINDRO"<<endl;
             cin>>op;
+                if(op==1){
+                cout<<"Qual e a raiz que deve ser calculada?"<<endl;
+                    cin>>z.c;
+                cout<<"Quantas aproximacoes devem ser feitas?"<<endl;
+                    cin>>z.a;
+                cout<<"O valor aproximado da raiz e "<<z.valorRAIZ(z.c, z.a)<<endl;
+                
+                }
                 if(op==2){
                 cout<<"Qual o raio do cilindro?"<<endl;
-                    cin>>volume.raio;
+                    cin>>z.raio;
                 cout<<"Qual a altura do cilindro"<<endl;
-                    cin>>volume.h;
-                cout<<"O volume e "<<volume.Volu(volume.h, volume.raio)<<endl;
+                    cin>>z.h;
+                cout<<"O volume e "<<z.Volu(z.h, z.raio)<<endl;
             }
 }
