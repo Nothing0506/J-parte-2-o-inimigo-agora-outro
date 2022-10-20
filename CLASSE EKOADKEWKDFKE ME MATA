@@ -1,0 +1,49 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+
+using namespace std;
+
+class Calculo{
+    private:
+        long double x, y1, y2, soma, p, n, vol,pi;
+    public:
+        long double h, raio;
+    float valorPI(){
+        x=0, y2=0, soma=0, n=1000;
+        p=1/n;
+        for(long double i=0; i<1; i=i+p){
+            y1=(1/(1+i*i));
+            soma=((y1+y2)*p)/2 + soma;
+            y2=y1;
+        }
+           return 4*soma;
+        }
+    float Volu(long double raio, long double h){
+        return valorPI()*raio*raio*h;
+    }
+    public:
+        float a, c;
+    private:
+        float b;
+    void valorRAIZ(float a, float b, float c){
+            b=c/2;
+        for(int i=0; i<a; i++){
+            b=(b*b+c)/(2*b);//calcula o novo valor de x de acordo com os antigos valores
+        }
+        cout<<"O valor da raiz do numero "<<c<<" e igual a"<<b<<endl;   
+    }
+};
+int main() {
+    int op;
+    Calculo volume, raiz;
+        cout<<"Deseja calcular a raiz ou calcular o volume de um cilindro?"<<endl;
+        cout<<"1 para RAIZ, 2 para CILINDRO"<<endl;
+            cin>>op;
+                if(op==2){
+                cout<<"Qual o raio do cilindro?"<<endl;
+                    cin>>volume.raio;
+                cout<<"Qual a altura do cilindro"<<endl;
+                    cin>>volume.h;
+                cout<<"O volume e "<<volume.Volu(volume.h, volume.raio)<<endl;
+            }
+}
