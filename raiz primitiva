@@ -1,0 +1,35 @@
+#include<iostream>
+#include<math.h>
+#include<vector>
+
+using namespace std;
+
+void primitive(int p){
+    int g, k;
+    int ant[p-1];
+        for(g=1; g<p-1; g++){
+          cout<<"Para g igual a "<<g<<" temos:"<<endl;
+            for(int i=0; i<p-2; i++){
+                k=pow(g, i);
+                ant[i]=(k%p);
+                    cout<<g<<"^"<<i<<"="<<ant[i]<<" mod("<<p<<")"<<endl;
+                }
+                for(int j=0; j<g; j++){
+                    if(ant[j]==ant[g]){
+                        cout<<g<<" nao e raiz primitiva"<<endl;
+                        break;
+                    }else{
+                        cout<<g<<" e raiz primitiva de "<<p<<endl;
+                    }
+                    break;
+            }
+        }
+}
+
+int main(){
+    int p;
+        cout<<"Digite o numero para definirmos suas raizes primitivas"<<endl;
+            cin>>p;
+        primitive(p);
+
+}
