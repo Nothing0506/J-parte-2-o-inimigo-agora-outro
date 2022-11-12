@@ -1,12 +1,71 @@
 #include<iostream>
 #include<math.h>
 
-
 using namespace std;
 
+void BusDire(int *dados, int n){
+    int esco2;
+        cout<<"Qual elemento voce quer buscar?"<<endl;
+            cin>>esco2;
+        for(int i=0; i<n; i++){
+            if(esco2==dados[i]){
+                cout<<"O dado "<<i+1<<" e igual a sua escolha "<<esco2<<endl;
+            }
+        }
+}
+
+void BusPar(int *dados, int n){
+    int esco2;
+        cout<<"Qual elemento voce quer buscar?"<<endl;
+            cin>>esco2;
+        for(int i=0; i<n; i++){
+            if(esco2==dados[i]){
+                cout<<"O dado "<<i+1<<" e igual a sua escolha "<<esco2<<endl;
+                break;
+            }
+        }
+}
+
+void BusMaior(int *dados, int n){
+    int maior, menor;
+        for(int i=0; i<n; i++){
+            if(i==0){
+                maior=dados[i];
+            }
+            if(dados[i]>maior){
+                maior=dados[i];
+            }
+        }
+        for(int i=0; i<n; i++){
+            if(i==0){
+                menor=dados[i];
+            }
+            if(menor>dados[i]){
+                menor=dados[i];
+            }
+        }
+    cout<<"O valor MAXIMO valor e "<<maior<<" e o valor MINIMO e "<<menor<<endl;
+}
+
+void BusModa(int *dados, int n){
+    int moda[n];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(dados[i]==dados[j]){
+                    moda[j]=i;
+                }
+            }
+        }
+        for(int k=0; k<n; k++){
+            if(moda[k]>0){
+                cout<<"Os elementos "<<k<<" sao iguais"<<endl;
+            }
+        }
+}
+
 int main(){
-    int n, val;
-        cout<"Quantos dados vao ser inseridos?"<<endl;
+    int n, val,esco;
+        cout<<"Quantos dados vao ser inseridos?"<<endl;
             cin>>n;
             int dados[n];
         cout<<"Insira os dados"<<endl;
@@ -14,7 +73,30 @@ int main(){
             cin>>val;
             dados[i]=val;
         }
-        
+        cout<<"Como voce deseja buscar os dados?"<<endl;
+            cout<<"1.Buscar sem parada"<<endl;
+            cout<<"2.Buscar com parada"<<endl;
+            cout<<"3.Buscar maior e menor elemento"<<endl;
+            cout<<"4.Buscar moda dos elementos"<<endl;
+        cin>>esco;
 
+        if(esco<1 || esco>4){
+            do{
+                cout<<"Escolha novamente"<<endl;
+                cin>>esco;
+            }while(esco<1 || esco>4);
+        }
+
+             if(esco==1){
+                BusDire(dados, n);
+            }
+             if(esco==2){
+                BusPar(dados,n);
+             }
+             if(esco==3){
+                BusMaior(dados, n);
+             }
+             if(esco==4){
+                BusModa(dados, n);
+             }
 }
-
