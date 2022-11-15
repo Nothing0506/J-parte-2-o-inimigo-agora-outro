@@ -3,7 +3,9 @@
 
 using namespace std;
 
-void BusDire(int *dados, int n){
+class Tabela{
+    public:
+    void BusDire(int *dados, int n){
     int esco2;
         cout<<"Qual elemento voce quer buscar?"<<endl;
             cin>>esco2;
@@ -61,13 +63,32 @@ void BusModa(int *dados, int n){
                 cout<<"Os elementos "<<k<<" sao iguais"<<endl;
             }
         }
-}
+    }
+
+void organizador(int *dados, int n){
+    int crescente[n];
+        for(int i=0; i<n; i++){
+            if(i==0){
+                crescente[i]=dados[i];
+            }
+        for(int j=0; j<n; j++){
+            if(dados[j]>crescente[i]){
+                crescente[i]=dados[j];
+            }
+        }
+    }
+        for(int j=0; j<n;j++){
+            cout<<crescente[j]<<endl;
+        }
+    }
+};
 
 int main(){
     int n, val,esco;
+    Tabela bus;
         cout<<"Quantos dados vao ser inseridos?"<<endl;
             cin>>n;
-            int dados[n];
+        int dados[n];
         cout<<"Insira os dados"<<endl;
         for(int i=0; i<n; i++){
             cin>>val;
@@ -78,25 +99,29 @@ int main(){
             cout<<"2.Buscar com parada"<<endl;
             cout<<"3.Buscar maior e menor elemento"<<endl;
             cout<<"4.Buscar moda dos elementos"<<endl;
+            cout<<"5.Organizar os dados"<<endl;
         cin>>esco;
 
-        if(esco<1 || esco>4){
+        if(esco<1 || esco>5){
             do{
                 cout<<"Escolha novamente"<<endl;
                 cin>>esco;
-            }while(esco<1 || esco>4);
+            }while(esco<1 || esco>5);
         }
 
              if(esco==1){
-                BusDire(dados, n);
+                bus.BusDire(dados, n);
             }
              if(esco==2){
-                BusPar(dados,n);
+                bus.BusPar(dados,n);
              }
              if(esco==3){
-                BusMaior(dados, n);
+                bus.BusMaior(dados, n);
              }
              if(esco==4){
-                BusModa(dados, n);
+                bus.BusModa(dados, n);
+             }
+             if(esco==5){
+                bus.organizador(dados,n);
              }
 }
