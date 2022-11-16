@@ -66,17 +66,30 @@ void BusModa(int *dados, int n){
     }
 
 void organizador(int *dados, int n){
-    int crescente[n];
-        for(int i=0; i<n; i++){
-            if(i==0){
-                crescente[i]=dados[i];
-            }
-        for(int j=0; j<n; j++){
-            if(dados[j]>crescente[i]){
-                crescente[i]=dados[j];
-            }
-        }
+    int crescente[n],salvador,k;
+        k=0;
+
+    for(int i=0; i<n; i++){
+        crescente[i]=dados[i];//atribui os valores insieridos ao vetor crescente
     }
+
+    do{
+        for(int i=0; i<n; i++){
+                salvador=crescente[i];
+        if(i>0){
+            for(int j=0; j<i; j++){
+                if(salvador>crescente[i-1]){
+                    crescente[i]=crescente[i-1];
+                    crescente[i-1]=salvador;
+                }
+                if(salvador=crescente[i-1]){
+                    crescente[i-1]=crescente[i-1];
+                }
+            }
+          }
+      }
+      k++;
+    }while(k<n);
         for(int j=0; j<n;j++){
             cout<<crescente[j]<<endl;
         }
