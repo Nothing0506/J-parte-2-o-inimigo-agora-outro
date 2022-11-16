@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Tabela{
+class Tabela{//Classe que cria as opções de busca de dados e que organiza os dados em ordem decrescente
     public:
     void BusDire(int *dados, int n){
     int esco2;
@@ -66,24 +66,24 @@ void BusModa(int *dados, int n){
     }
 
 void organizador(int *dados, int n){
-    int crescente[n],salvador,k;
+    int decrescente[n],salvador,k;
         k=0;
 
     for(int i=0; i<n; i++){
-        crescente[i]=dados[i];//atribui os valores insieridos ao vetor crescente
+        decrescente[i]=dados[i];//atribui os valores insieridos ao vetor crescente
     }
 
     do{
         for(int i=0; i<n; i++){
-                salvador=crescente[i];
+                salvador=decrescente[i];
         if(i>0){
             for(int j=0; j<i; j++){
-                if(salvador>crescente[i-1]){
-                    crescente[i]=crescente[i-1];
-                    crescente[i-1]=salvador;
+                if(salvador>decrescente[i-1]){
+                    decrescente[i]=decrescente[i-1];
+                    decrescente[i-1]=salvador;
                 }
-                if(salvador=crescente[i-1]){
-                    crescente[i-1]=crescente[i-1];
+                if(salvador=decrescente[i-1]){
+                    decrescente[i-1]=decrescente[i-1];
                 }
             }
           }
@@ -91,13 +91,13 @@ void organizador(int *dados, int n){
       k++;
     }while(k<n);
         for(int j=0; j<n;j++){
-            cout<<crescente[j]<<endl;
+            cout<<decrescente[j]<<endl;
         }
     }
 };
 
 int main(){
-    int n, val,esco;
+    int n, val,esco, resp;
     Tabela bus;
         cout<<"Quantos dados vao ser inseridos?"<<endl;
             cin>>n;
@@ -107,6 +107,7 @@ int main(){
             cin>>val;
             dados[i]=val;
         }
+    do{
         cout<<"Como voce deseja buscar os dados?"<<endl;
             cout<<"1.Buscar sem parada"<<endl;
             cout<<"2.Buscar com parada"<<endl;
@@ -137,4 +138,9 @@ int main(){
              if(esco==5){
                 bus.organizador(dados,n);
              }
+        cout<<"Deseja continuar?"<<endl;
+        cout<<"1.Sim    2.Nao"<<endl;
+            cin>>resp;
+    }while(resp!=2);
+    cout<<"Obrigado"<<endl;
 }
