@@ -5,40 +5,40 @@ using namespace std;
 
 class Tabela{//Classe que cria as opções de busca de dados e que organiza os dados em ordem decrescente
     public:
-    void BusDire(int *dados, int n){
+    void BusDire(int *dados, int n){//Função que busca os dados sem interrupção, rodando por todos os dados e indincando todos que são iguais a escolha do usuário
     int esco2;
         cout<<"Qual elemento voce quer buscar?"<<endl;
-            cin>>esco2;
+            cin>>esco2;//recebe o dado que deve ser buscado
         for(int i=0; i<n; i++){
-            if(esco2==dados[i]){
-                cout<<"O dado "<<i+1<<" e igual a sua escolha "<<esco2<<endl;
+            if(esco2==dados[i]){//ve se os dados são iguais a escolha
+                cout<<"O dado "<<i+1<<" e igual a sua escolha "<<esco2<<endl;//Mostra quais são os dados que são iguais a escolha do usuário, isso de acordo com a ordem que os dados foram inseridas
             }
         }
 }
 
-void BusPar(int *dados, int n){
+void BusPar(int *dados, int n){//Função que busca com parada, interormpendo a busca assim que encontrar o primeiro dado que é igual a escolha do usuário
     int esco2;
         cout<<"Qual elemento voce quer buscar?"<<endl;
-            cin>>esco2;
+            cin>>esco2;//recebe o dado que deve ser buscado
         for(int i=0; i<n; i++){
-            if(esco2==dados[i]){
-                cout<<"O dado "<<i+1<<" e igual a sua escolha "<<esco2<<endl;
+            if(esco2==dados[i]){//compara os dados
+                cout<<"O dado "<<i+1<<" e igual a sua escolha "<<esco2<<endl;//mostra o primeiro dado que é igual a escolha do usuário
                 break;
             }
         }
 }
 
-void BusMaior(int *dados, int n){
+void BusMaior(int *dados, int n){//Função que busca o maior e o menor valor dos dados inseridos
     int maior, menor;
         for(int i=0; i<n; i++){
             if(i==0){
-                maior=dados[i];
+                maior=dados[i];//declara o primeiro valor como sendo o suposto maior
             }
-            if(dados[i]>maior){
+            if(dados[i]>maior){//compara com os demais valores, se algum dos demais for maior, o novo maior valor será este 
                 maior=dados[i];
             }
         }
-        for(int i=0; i<n; i++){
+        for(int i=0; i<n; i++){//realiza o mesmo procedimento que o maior valor, só que agora com o menor (igual, só que diferente)
             if(i==0){
                 menor=dados[i];
             }
@@ -65,24 +65,24 @@ void BusModa(int *dados, int n){
         }
     }
 
-void organizador(int *dados, int n){
+void organizador(int *dados, int n){//Função que organiza os dados em ordem decrescente
     int decrescente[n],salvador,k;
         k=0;
 
     for(int i=0; i<n; i++){
-        decrescente[i]=dados[i];//atribui os valores insieridos ao vetor crescente
+        decrescente[i]=dados[i];//atribui os valores insieridos ao vetor decrescente
     }
 
     do{
         for(int i=0; i<n; i++){
-                salvador=decrescente[i];
+                salvador=decrescente[i];//salva o valor do derescente i
         if(i>0){
             for(int j=0; j<i; j++){
-                if(salvador>decrescente[i-1]){
+                if(salvador>decrescente[i-1]){//compara o valor salvo com o anterior, caso seja maior, ele subistitui o anterior por esse salvo
                     decrescente[i]=decrescente[i-1];
                     decrescente[i-1]=salvador;
                 }
-                if(salvador=decrescente[i-1]){
+                if(salvador=decrescente[i-1]){//se o valor for igual, ele só garante que nada vá ocorrer
                     decrescente[i-1]=decrescente[i-1];
                 }
             }
