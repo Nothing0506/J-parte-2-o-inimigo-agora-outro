@@ -30,8 +30,9 @@ void comeco(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
-    int joAnel, joPino, dispo;
-        cin>>joAnel;
+    int joAnel, joPino, dispo, localAnel;
+        cout<<"Qual anel deve ser movido?"<<endl;
+            cin>>joAnel;
 
         if(joAnel>numAnel || joAnel<1){
             do{
@@ -43,6 +44,15 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
         for(int i=0; i<numAnel+1; i++){
             if(Pino1[i]==joAnel){
                 dispo=Pino1[i-1];
+                localAnel=1;
+                break;
+            }
+        }
+
+        for(int i=0; i<numAnel+1; i++){
+            if(Pino2[i]==joAnel){
+                dispo=Pino2[i-1];
+                localAnel=2;
                 break;
             }
         }
@@ -68,8 +78,102 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
                     cin>>joPino;
             }while(joPino>3 || joPino<1);
         }
+   int mudarJo;
 
+        if(joPino==1){
 
+            for(int i=0; i<numAnel+1; i++){
+                if(Pino1[i]<joAnel && Pino1[i]!=0){
+                    do{
+                        cout<<"Jogada invalida. Escolha outro pino ou outro anel"<<endl;
+                        cout<<"1. PINO"<<endl;
+                        cout<<"2.ANEL"<<endl;
+                            cin>>mudarJo;
+                        if(mudarJo==1){
+                            jogada(numAnel, Pino1, Pino2, Pino3,anel);
+                        }
+                        if(mudarJo==2){
+                        cout<<"Escolha o pino"<<endl;
+                            cin>>joPino;
+                                if(joPino!=1){
+                                    break;
+                                }
+                        }
+                    }while(Pino1[i]<joAnel && Pino1[i]!=0);
+                        if(Pino1[i]>joAnel && Pino1[i]!=0){
+                            dispo=i;
+                        }
+                }
+            }
+            Pino1[dispo+1]=joAnel;
+            for(int i=0; i<=numAnel+1;i++){
+                cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
+            }
+        }
+
+        if(joPino==2){
+
+            for(int i=0; i<numAnel+1; i++){
+                if(Pino2[i]<joAnel && Pino2[i]!=0){
+                    do{
+                        cout<<"Jogada invalida. Escolha outro pino ou outro anel"<<endl;
+                        cout<<"1. PINO"<<endl;
+                        cout<<"2.ANEL"<<endl;
+                            cin>>mudarJo;
+                        if(mudarJo==1){
+                            jogada(numAnel, Pino1, Pino2, Pino3,anel);
+                        }
+                        if(mudarJo==2){
+                        cout<<"Escolha o pino"<<endl;
+                            cin>>joPino;
+                                if(joPino!=1){
+                                    break;
+                                }
+                        }
+                    }while(Pino2[i]<joAnel && Pino2[i]!=0);
+                        if(Pino2[i]>joAnel && Pino2[i]!=0){
+                            dispo=i;
+                        }
+                }
+            }
+            Pino2[dispo+1]=joAnel;
+            for(int i=0; i<=numAnel+1;i++){
+                cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
+            }
+        }
+
+        if(joPino==3){
+
+            for(int i=0; i<numAnel+1; i++){
+                if(Pino3[i]<joAnel && Pino3[i]!=0){
+                    do{
+                        cout<<"Jogada invalida. Escolha outro pino ou outro anel"<<endl;
+                        cout<<"1. PINO"<<endl;
+                        cout<<"2.ANEL"<<endl;
+                            cin>>mudarJo;
+                        if(mudarJo==1){
+                            jogada(numAnel, Pino1, Pino2, Pino3,anel);
+                        }
+                        if(mudarJo==2){
+                        cout<<"Escolha o pino"<<endl;
+                            cin>>joPino;
+                                if(joPino!=1){
+                                    break;
+                                }
+                        }
+                    }while(Pino3[i]<joAnel && Pino3[i]!=0);
+                        if(Pino3[i]>joAnel && Pino3[i]!=0){
+                            dispo=i;
+                        }
+                }
+            }
+            Pino3[dispo+1]=joAnel;
+            for(int i=0; i<=numAnel+1;i++){
+                cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
+            }
+        }
+        
+    
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -87,7 +191,6 @@ int main(){
         int Pino1[numAnel+2], Pino2[numAnel+2], Pino3[numAnel+2], anel[numAnel];
             comeco(numAnel, Pino1, Pino2, Pino3,anel);
         cout<<"A jogada deve ser realizada selecionando o ANEL que vc deseja mover e, apos isso, para qual PINO deseja mover"<<endl;
-        cout<<"Qual anel deve ser movido?"<<endl;
             jogada(numAnel, Pino1, Pino2, Pino3,anel);
 }
 
