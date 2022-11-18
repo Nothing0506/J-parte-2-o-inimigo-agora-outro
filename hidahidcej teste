@@ -40,9 +40,9 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
             }while(joAnel>numAnel || joAnel<1);
           }
           
-        for(int i=0; i<numAnel; i++){
+        for(int i=0; i<numAnel+1; i++){
             if(Pino1[i]==joAnel){
-                Pino1[i+1]=dispo;
+                dispo=Pino1[i-1];
                 break;
             }
         }
@@ -53,12 +53,17 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
                 cin>>joAnel;
             for(int i=0; i<numAnel; i++){
                 if(Pino1[i]==joAnel){
-                    Pino1[i+1]=dispo;
+                    dispo=Pino1[i-1];
                         break;
                     }
                 }
             }while(dispo!=0);
         }
+
+        cout<<"Em qual pino voce deseja colocoar o anel "<<joAnel<<" ?"<<endl;
+            cin>>joPino;
+            
+
 
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +82,7 @@ int main(){
         int Pino1[numAnel+2], Pino2[numAnel+2], Pino3[numAnel+2], anel[numAnel];
             comeco(numAnel, Pino1, Pino2, Pino3,anel);
         cout<<"A jogada deve ser realizada selecionando o ANEL que vc deseja mover e, apos isso, para qual PINO deseja mover"<<endl;
-        cout<<"Qual jogada deve ser feita?"<<endl;
+        cout<<"Qual anel deve ser movido?"<<endl;
             jogada(numAnel, Pino1, Pino2, Pino3,anel);
 }
 
