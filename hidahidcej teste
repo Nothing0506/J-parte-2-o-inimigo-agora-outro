@@ -30,7 +30,7 @@ void comeco(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
-    int joAnel, joPino, dispo;
+    int joAnel, joPino, dispo, localAnel;
         cout<<"Qual anel deve ser movido?"<<endl;
             cin>>joAnel;
 
@@ -44,6 +44,15 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
         for(int i=0; i<numAnel+1; i++){
             if(Pino1[i]==joAnel){
                 dispo=Pino1[i-1];
+                localAnel=1;
+                break;
+            }
+        }
+
+        for(int i=0; i<numAnel+1; i++){
+            if(Pino2[i]==joAnel){
+                dispo=Pino2[i-1];
+                localAnel=2;
                 break;
             }
         }
@@ -70,6 +79,7 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
             }while(joPino>3 || joPino<1);
         }
    int mudarJo;
+
         if(joPino==1){
 
             for(int i=0; i<numAnel+1; i++){
@@ -100,6 +110,7 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
                 cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
             }
         }
+
         if(joPino==2){
 
             for(int i=0; i<numAnel+1; i++){
@@ -130,6 +141,7 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
                 cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
             }
         }
+
         if(joPino==3){
 
             for(int i=0; i<numAnel+1; i++){
