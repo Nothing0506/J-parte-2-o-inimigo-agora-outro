@@ -3,6 +3,7 @@
 
 using namespace std;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void comeco(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
           for(int i=1; i<=numAnel;i++){
             anel[i]=numAnel-i+1;
@@ -27,21 +28,45 @@ void comeco(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
                 cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
             }  
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
-    int joAnel, joPino;
+    int joAnel, joPino, dispo;
         cin>>joAnel;
+
         if(joAnel>numAnel || joAnel<1){
             do{
                 cout<<"Digite novamente"<<endl;
                 cin>>joAnel;
             }while(joAnel>numAnel || joAnel<1);
           }
-        if(joAnel==Pino1[numAnel]){
-            
+          
+        for(int i=0; i<numAnel+1; i++){
+            if(Pino1[i]==joAnel){
+                dispo=Pino1[i-1];
+                break;
             }
+        }
+
+        if(dispo!=0){
+            do{
+                cout<<"Jogada invalida. Ha outro disco a cima do disco "<<joAnel<<" . Esolha novamente"<<endl;
+                cin>>joAnel;
+            for(int i=0; i<numAnel; i++){
+                if(Pino1[i]==joAnel){
+                    dispo=Pino1[i-1];
+                        break;
+                    }
+                }
+            }while(dispo!=0);
+        }
+
+        cout<<"Em qual pino voce deseja colocoar o anel "<<joAnel<<" ?"<<endl;
+            cin>>joPino;
+            
+
 
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(){
     int numAnel;
@@ -57,7 +82,8 @@ int main(){
         int Pino1[numAnel+2], Pino2[numAnel+2], Pino3[numAnel+2], anel[numAnel];
             comeco(numAnel, Pino1, Pino2, Pino3,anel);
         cout<<"A jogada deve ser realizada selecionando o ANEL que vc deseja mover e, apos isso, para qual PINO deseja mover"<<endl;
-        cout<<"Qual jogada deve ser feita?"<<endl;
+        cout<<"Qual anel deve ser movido?"<<endl;
+            jogada(numAnel, Pino1, Pino2, Pino3,anel);
 }
 
 
