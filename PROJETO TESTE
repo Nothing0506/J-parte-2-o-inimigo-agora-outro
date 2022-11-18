@@ -3,19 +3,46 @@
 
 using namespace std;
 
-void pessa(int numAnel){
-     int Pino1[numAnel+2], Pino2[numAnel+2], Pino3[numAnel+2], anel[numAnel];
-          for(int i=0; i<numAnel;i++){
-            anel[i]=numAnel-i;
+void comeco(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
+          for(int i=1; i<=numAnel;i++){
+            anel[i]=numAnel-i+1;
         }
-        for(int i=0; i<numAnel;i++){
-            Pino1[i]=anel[numAnel-i];
+        for(int i=0; i<=numAnel+2;i++){
+            if(i<=numAnel){
+            Pino1[i]=anel[numAnel-i+1];
+            }
+            if(i>numAnel){
+                Pino1[i]=0;
+            }
+            Pino2[i]=0;
+            Pino3[i]=0;
+            if(i==numAnel+1){
+            Pino1[i]=8;
+            Pino2[i]=8;
+            Pino3[i]=8;
+            }
         }
         cout<<"A ordem dos aneis no pino um e"<<endl;
-            for(int i=0; i<numAnel; i++){
-                cout<<Pino1[i]<<endl;
+            for(int i=0; i<=numAnel+1;i++){
+                cout<<Pino1[i]<<"   "<<Pino2[i]<<"   "<<Pino3[i]<<endl;
             }  
 }
+
+void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
+    int joAnel, joPino;
+        cin>>joAnel;
+        if(joAnel>numAnel || joAnel<1){
+            do{
+                cout<<"Digite novamente"<<endl;
+                cin>>joAnel;
+            }while(joAnel>numAnel || joAnel<1);
+          }
+        if(joAnel==Pino1[numAnel]){
+            
+            }
+
+}
+
 int main(){
     int numAnel;
         cout<<"Quantos aneis vao ser inseridos para o jogo?"<<endl;
@@ -27,6 +54,10 @@ int main(){
                     cin>>numAnel;
             }while(numAnel<3 || numAnel>7);
         }
-        pessa(numAnel);
+        int Pino1[numAnel+2], Pino2[numAnel+2], Pino3[numAnel+2], anel[numAnel];
+            comeco(numAnel, Pino1, Pino2, Pino3,anel);
+        cout<<"A jogada deve ser realizada selecionando o ANEL que vc deseja mover e, apos isso, para qual PINO deseja mover"<<endl;
+        cout<<"Qual jogada deve ser feita?"<<endl;
 }
+
 
