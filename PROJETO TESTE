@@ -62,7 +62,12 @@ void jogada(int numAnel, int *Pino1, int *Pino2, int *Pino3, int *anel){
 
         cout<<"Em qual pino voce deseja colocoar o anel "<<joAnel<<" ?"<<endl;
             cin>>joPino;
-            
+        if(joPino>3 || joPino<1){
+            do{
+                cout<<"Jogada invalida. Escolha novamente"<<endl;
+                    cin>>joPino;
+            }while(joPino>3 || joPino<1);
+        }
 
 
 }
