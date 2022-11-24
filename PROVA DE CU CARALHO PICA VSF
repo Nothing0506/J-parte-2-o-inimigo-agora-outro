@@ -1,4 +1,4 @@
- #include<iostream>
+#include<iostream>
 
     using namespace std;
 
@@ -60,54 +60,57 @@ float resto(float A[][MAX], int n, int k, int coluna){
     
 int controle;
 controle=k-1;
+
     do{
         cout<<"CONTROLE AGORA E "<<controle<<endl;
         if(controle<0){
-            for(int i=k-1; i<k+2; i++){
+            for(int i=k-1; i<k; i++){
                 auxi=0;
                 pLinha[i]=&auxi;
-                cout<<"AQUI DEU ZERO ccccc"<<*pLinha[i]<<endl;
             }
              controle++;
         }
-        
-        cout<<"CONTROLE AGORA E "<<controle<<endl;
 
         if(controle>=0){
             if(controle==k ||controle==coluna){
-                for(int i=k-1; i<k+2; i++){
+                for(int i=k-1; i<k; i++){
                     auxi=0;
                     pLinha[i]=&auxi;
-                    cout<<"AQUI DEU ZERO aaa"<<*pLinha[i]<<endl;
                 }
                 controle++;
             }
             if(controle!=k && controle!=coluna){ 
-                for(int i=k-1; i<k+2; i++){
+                for(int i=coluna-1; i<coluna+2; i++){
+                    if(i<0 || i>n){
+                        auxi=0;
+                        pLinha[i]=&auxi;
+                    }
                     if(i==k || i==coluna){
                         auxi=0;
                         pLinha[i]=&auxi;
-                    }else{
+                    }
+                    if(i!=k && i!=coluna && i<n && i>=0){
                     pLinha[i]=&A[controle][i];
                     cout<<"AQUI DEU OUTRA COISA bbbbb"<<*pLinha[i]<<endl;
                     }
                 }
             }
+            //controle++;
         }
 
         if(controle>n){
             for(int i=0; i<n; i++){
                 auxi=0;
                 pLinha[i]=&auxi;
-                cout<<"AQUI DEU ZERO"<<*pLinha[i]<<endl;
             }
         }
             cout<<"CONTROLE AGORA E "<<controle<<endl;
+            
         for(int j=1; j<2; j++){
                 Constante=(*pLinha[j]);
                 Constante=Constante*0.1;
                 resul=resul+Constante;
-                cout<<"AAAAAAAAAAA "<<resul<<endl;
+                cout<<"Resultado: "<<resul<<endl;
             }
         controle++;
         cout<<"CHEGOU AQUI"<<endl;
@@ -165,6 +168,4 @@ void B(float A[][MAX], int n){
             cout<<"Entrando na matriz B"<<endl;
             
             B(A,n);
-
-
     }
