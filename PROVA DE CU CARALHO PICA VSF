@@ -1,4 +1,4 @@
-    #include<iostream>
+ #include<iostream>
 
     using namespace std;
 
@@ -8,6 +8,7 @@
 float MLinha(float A[][MAX], int n, int k, int coluna){
     float *SalvaLinha[n],Constante,resul;
     resul=0;
+    Constante=0;
         for(int i=0; i<n; i++){
             SalvaLinha[i]=&A[k][i];
         }
@@ -31,6 +32,7 @@ float MLinha(float A[][MAX], int n, int k, int coluna){
 float MColuna(float A[][MAX], int n, int k, int coluna){
     float *Salvacoluna[n],Constante,resul;
     resul=0;
+    Constante=0;
         for(int i=0; i<n; i++){
             Salvacoluna[i]=&A[i][k];
         }
@@ -50,50 +52,88 @@ float MColuna(float A[][MAX], int n, int k, int coluna){
     }
     return resul;
 }
-/*
+
 float resto(float A[][MAX], int n, int k, int coluna){
-    float *Cantos[4], resul;
+    float *pLinha[MAX], Constante, resul, auxi;
     resul=0;
-    cout<<"aaaaaaaaa";
-        if(k-1<0 || k==(n-1)){
-            *Cantos[0]=0;
-            *Cantos[1]=0;
-            Cantos[2]=&A[k+1][coluna-1];
-            Cantos[3]=&A[k+1][coluna+1];
+    Constante=0;
+    
+int controle;
+controle=k-1;
+    do{
+        cout<<"CONTROLE AGORA E "<<controle<<endl;
+        if(controle<0){
+            for(int i=k-1; i<k+2; i++){
+                auxi=0;
+                pLinha[i]=&auxi;
+                cout<<"AQUI DEU ZERO ccccc"<<*pLinha[i]<<endl;
+            }
+             controle++;
         }
-        if(coluna-1<0||coluna==(n-1)){
-            *Cantos[0]=0;
-            Cantos[1]=&A[k-1][coluna+1];
-            *Cantos[2]=0;
-            Cantos[3]=&A[k+1][coluna+1];
+        
+        cout<<"CONTROLE AGORA E "<<controle<<endl;
+
+        if(controle>=0){
+            if(controle==k ||controle==coluna){
+                for(int i=k-1; i<k+2; i++){
+                    auxi=0;
+                    pLinha[i]=&auxi;
+                    cout<<"AQUI DEU ZERO aaa"<<*pLinha[i]<<endl;
+                }
+                controle++;
+            }
+            if(controle!=k && controle!=coluna){ 
+                for(int i=k-1; i<k+2; i++){
+                    if(i==k || i==coluna){
+                        auxi=0;
+                        pLinha[i]=&auxi;
+                    }else{
+                    pLinha[i]=&A[controle][i];
+                    cout<<"AQUI DEU OUTRA COISA bbbbb"<<*pLinha[i]<<endl;
+                    }
+                }
+            }
         }
-        if(k-1>0 && coluna-1>0 &&coluna!=(n-1) && k!=(n-1)){
-            Cantos[0]=&A[k-1][coluna-1];
-            Cantos[1]=&A[k-1][coluna+1];
-            Cantos[2]=&A[k+1][coluna-1];
-            Cantos[3]=&A[k+1][coluna+1];
+
+        if(controle>n){
+            for(int i=0; i<n; i++){
+                auxi=0;
+                pLinha[i]=&auxi;
+                cout<<"AQUI DEU ZERO"<<*pLinha[i]<<endl;
+            }
         }
-    for(int i=0; i<4; i++){
-        resul=*Cantos[i]+resul;
-    }
-    resul=resul*0.1;
+            cout<<"CONTROLE AGORA E "<<controle<<endl;
+        for(int j=1; j<2; j++){
+                Constante=(*pLinha[j]);
+                Constante=Constante*0.1;
+                resul=resul+Constante;
+                cout<<"AAAAAAAAAAA "<<resul<<endl;
+            }
+        controle++;
+        cout<<"CHEGOU AQUI"<<endl;
+    }while(controle<k+2);
     return resul;
 }
-*/
+
 void B(float A[][MAX], int n){
         float B[MAX][MAX],Bfinal;
             Bfinal=0;
             for(int k=0; k<n; k++){ 
                 for(int coluna=0; coluna<n; coluna++){
-                    if(k%2==0){
                         Bfinal=MLinha(A,n,k,coluna)+Bfinal;
                         Bfinal=Bfinal+MColuna(A,n,k,coluna);
-                        //Bfinal=Bfinal+resto(A,n,k,coluna);
-                        cout<<"o elemento "<<k<<" "<<coluna<<" da matriz B e: "<<Bfinal<<endl;
-                    }
-                    Bfinal=0;
-
+                        Bfinal=Bfinal+resto(A,n,k,coluna);
+                        B[k][coluna]=Bfinal;
+                        Bfinal=0;
             }
+    }
+        cout<<endl<<endl;
+        cout<<"A matriz B foi definida e sua forma e:"<<endl;
+            for(int k=0; k<n; k++){ 
+                for(int coluna=0; coluna<n; coluna++){
+                       cout<<B[k][coluna]<<" ";
+            }
+            cout<<endl;
     }
 }
 
