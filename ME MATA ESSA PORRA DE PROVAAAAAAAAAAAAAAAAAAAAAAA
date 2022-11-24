@@ -1,0 +1,146 @@
+    #include<iostream>
+
+    using namespace std;
+
+    const int MAX=10;
+
+
+float MLinha(float A[][MAX], int n, int k, int coluna){
+    float *SalvaLinha[n],Constante,resul;
+    resul=0;
+        for(int i=0; i<n; i++){
+            SalvaLinha[i]=&A[k][i];
+        }
+    for(int i=k-1; i<=k+1; i++){
+        if(i<0){
+            *SalvaLinha[0]=0;
+        }
+        if(i>0){
+            if(coluna==k && k==i){
+                *SalvaLinha[i]=0;
+            }else{
+            Constante=*SalvaLinha[i];
+            Constante=Constante*0.15;
+            resul=resul+Constante;
+            }
+        }
+    }
+    return resul;
+}
+
+float MColuna(float A[][MAX], int n, int k, int coluna){
+    float *Salvacoluna[n],Constante,resul;
+    resul=0;
+        for(int i=0; i<n; i++){
+            Salvacoluna[i]=&A[i][k];
+        }
+    for(int i=k-1; i<=k+1; i++){
+        if(i<0){
+            *Salvacoluna[0]=0;
+        }
+        if(i>0){
+            if(k==coluna && coluna==i){
+                *Salvacoluna[i]=0;
+            }else{
+            Constante=*Salvacoluna[i];
+            Constante=Constante*0.15;
+            resul=resul+Constante;
+            }
+        }
+    }
+    return resul;
+}
+
+float resto(float A[][MAX], int n, int k, int coluna){
+    float *Cantos[n][n], resul;
+    resul=0;
+        for(int i=k-1;i<=k+1; i++){
+            for(int j=coluna-1; j<=coluna+1;coluna++){
+                Cantos[i][j]=&A[i][j];
+            }
+        }
+        for(int i=k-1;i<=k+1; i++){
+            for(int j=coluna-1; j<=coluna+1;coluna++){
+                if(i<0){
+                    *Cantos[i][j]=0;
+                }
+                if(j<0){
+                    *Cantos[i][j]=0;
+                }
+                if(i>0 && j>0){
+                    if(i==j){
+                    *Cantos[i][j]=0;
+                    }
+                    if(i!=j){
+                        resul=(*Cantos[i-1][j-1])+(*Cantos[i-1][j+1])+(*Cantos[i+1][j-1])+(*Cantos[i+1][j+1]);
+                    }
+                }
+            }
+        }
+        /*if(coluna-1<0||coluna==(n-1)){
+            *Cantos[0]=0;
+            Cantos[1]=&A[k-1][coluna+1];
+            *Cantos[2]=0;
+            Cantos[3]=&A[k+1][coluna+1];
+        }
+        if(k-1>0 && coluna-1>0 &&coluna!=(n-1) && k!=(n-1)){
+            Cantos[0]=&A[k-1][coluna-1];
+            Cantos[1]=&A[k-1][coluna+1];
+            Cantos[2]=&A[k+1][coluna-1];
+            Cantos[3]=&A[k+1][coluna+1];
+        }
+    /*for(int i=0; i<4; i++){
+        resul=*Cantos[i]+resul;
+    }
+    resul=resul*0.1;*/
+    return resul;
+}
+
+void B(float A[][MAX], int n){
+        float B[MAX][MAX],Bfinal;
+            Bfinal=0;
+            for(int k=0; k<n; k++){ 
+                for(int coluna=0; coluna<n; coluna++){
+                    //if(k%2==0){
+                        Bfinal=MLinha(A,n,k,coluna)+Bfinal;
+                        Bfinal=Bfinal+MColuna(A,n,k,coluna);
+                        Bfinal=Bfinal+resto(A,n,k,coluna);
+                        cout<<"o elemento "<<k<<" "<<coluna<<" da matriz B e: "<<Bfinal<<endl;
+                    //}
+                    //Bfinal=0;
+
+            }
+    }
+}
+
+
+    int main(){
+        int n;
+            cout<<"Qual a dimensao da matriz?"<<endl;
+                cin>>n;
+            if(n>MAX){
+                do{
+                    cout<<"Digite novamente"<<endl;
+                        cin>>n;
+                }while(n>MAX);
+            }
+        float A[MAX][MAX];
+            cout<<"Digite os dados da matriz"<<endl;
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<n;j++){
+                        cin>>A[i][j];
+                    }
+                }
+            cout<<"A matriz inserida e:"<<endl;
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<n;j++){
+                        cout<<A[i][j]<<" ";
+                    }
+                    cout<<endl;
+                }
+            cout<<"Entrando na matriz B"<<endl;
+            
+            B(A,n);
+
+
+    }
