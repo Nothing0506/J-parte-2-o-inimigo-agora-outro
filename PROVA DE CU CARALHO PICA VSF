@@ -6,134 +6,116 @@
 
 
 float MLinha(float A[][MAX], int n, int k, int coluna){
-    float *SalvaLinha[n],Constante,resul;
+    float *SalvaLinha[n],Constante,resul, auxi;
     resul=0;
     Constante=0;
-        for(int i=0; i<n; i++){
-            SalvaLinha[i]=&A[k][i];
-        }
-    for(int i=k-1; i<=k+1; i++){
-        if(i<0){
-            *SalvaLinha[0]=0;
-        }
-        if(i>0){
-            if(coluna==k && k==i){
-                *SalvaLinha[i]=0;
+        for(int i=coluna-1; i<=coluna+1; i++){
+            if(coluna==i){
+                auxi=0;
+                SalvaLinha[i]=&auxi;
             }else{
+            SalvaLinha[i]=&A[k][i];
             Constante=*SalvaLinha[i];
             Constante=Constante*0.15;
             resul=resul+Constante;
             }
         }
-    }
+        for(int i=0; i<n; i++){
+        	auxi=0;
+            SalvaLinha[i]=&auxi;
+            Constante=0;
+		}
+        //cout<<"aqui o resultado do elemento da mesma linha "<<resul<<endl;
     return resul;
 }
 
 float MColuna(float A[][MAX], int n, int k, int coluna){
-    float *Salvacoluna[n],Constante,resul;
+    float *Salvacoluna[n],Constante,resul,auxi;
     resul=0;
     Constante=0;
-        for(int i=0; i<n; i++){
-            Salvacoluna[i]=&A[i][k];
-        }
-    for(int i=k-1; i<=k+1; i++){
-        if(i<0){
-            *Salvacoluna[0]=0;
-        }
-        if(i>0){
-            if(k==coluna && coluna==i){
-                *Salvacoluna[i]=0;
+        for(int i=k-1; i<k+2; i++){
+            if(i==k){
+                auxi=0;
+                Salvacoluna[i]=&auxi;
             }else{
+            Salvacoluna[i]=&A[i][coluna];
             Constante=*Salvacoluna[i];
             Constante=Constante*0.15;
             resul=resul+Constante;
-            }
         }
     }
+    	for(int i=0; i<n; i++){
+        	auxi=0;
+            Salvacoluna[i]=&auxi;
+            Constante=0;
+		}
+    //cout<<"aqui o resultado do elemento da mesma coluna "<<resul<<endl;
     return resul;
 }
 
 float resto(float A[][MAX], int n, int k, int coluna){
     float *pLinha[MAX], Constante, resul, auxi;
-    resul=0;
-    Constante=0;
+        resul=0;
+        Constante=0;
     
-int controle;
-controle=k-1;
-
-    do{
-        cout<<"CONTROLE AGORA E "<<controle<<endl;
-        if(controle<0){
-            for(int i=k-1; i<k; i++){
-                auxi=0;
-                pLinha[i]=&auxi;
-            }
-             controle++;
-        }
-
-        if(controle>=0){
-            if(controle==k ||controle==coluna){
-                for(int i=k-1; i<k; i++){
+    for(int i=k-1; i<k+2; i++){
+    	cout<<"AQUI ESTOU PEGANDO OS ELEMENTOS DA LINHA "<<i<<endl<<endl;
+        if(i==k){
+            auxi=0;
+            pLinha[i]=&auxi;
+        }else{
+            for(int j=coluna-1; j<coluna+2; j++){
+			cout<<"O ELEMENTO DA LINHA "<<i<<" COLUNA "<<j<<" TEM DIAGONAL "; 
+                if(j==coluna){
                     auxi=0;
-                    pLinha[i]=&auxi;
+                    pLinha[j]=&auxi;
+                }else{
+                    pLinha[j]=&A[i][j];
+                    Constante=*pLinha[j]+Constante;
                 }
-                controle++;
+                cout<<*pLinha[j]<<endl;
             }
-            if(controle!=k && controle!=coluna){ 
-                for(int i=coluna-1; i<coluna+2; i++){
-                    if(i<0 || i>n){
-                        auxi=0;
-                        pLinha[i]=&auxi;
-                    }
-                    if(i==k || i==coluna){
-                        auxi=0;
-                        pLinha[i]=&auxi;
-                    }
-                    if(i!=k && i!=coluna && i<n && i>=0){
-                    pLinha[i]=&A[controle][i];
-                    cout<<"AQUI DEU OUTRA COISA bbbbb"<<*pLinha[i]<<endl;
-                    }
-                }
-            }
-            //controle++;
+            /*for(int soma=0; soma<3; soma++){
+                Constante=(*pLinha[soma])+Constante;
+            }*/
+            cout<<"Aqui e o elemento "<<i<<" e o elemento da diagonal e: "<<Constante<<endl;
+            Constante=Constante*0.1;
         }
-
-        if(controle>n){
-            for(int i=0; i<n; i++){
-                auxi=0;
-                pLinha[i]=&auxi;
-            }
-        }
-            cout<<"CONTROLE AGORA E "<<controle<<endl;
-            
-        for(int j=1; j<2; j++){
-                Constante=(*pLinha[j]);
-                Constante=Constante*0.1;
-                resul=resul+Constante;
-                cout<<"Resultado: "<<resul<<endl;
-            }
-        controle++;
-        cout<<"CHEGOU AQUI"<<endl;
-    }while(controle<k+2);
+        resul=resul+Constante;
+          cout<<"O valor da soma dos elementos da quina e: "<<resul<<endl;
+        Constante=0;
+    }
+        cout<<"aqui o resultado FINAL da diagonal "<<resul<<endl;
     return resul;
 }
 
 void B(float A[][MAX], int n){
         float B[MAX][MAX],Bfinal;
             Bfinal=0;
-            for(int k=0; k<n; k++){ 
-                for(int coluna=0; coluna<n; coluna++){
+            
+             for(int k=0; k<MAX; k++){ 
+                for(int coluna=0; coluna<MAX; coluna++){                        
+                        B[k][coluna]=0;
+            }
+	}
+            
+            for(int k=1; k<=n; k++){ 
+                for(int coluna=1; coluna<=n; coluna++){
                         Bfinal=MLinha(A,n,k,coluna)+Bfinal;
+                            //cout<<"O primeiro BF e "<<Bfinal<<endl;
                         Bfinal=Bfinal+MColuna(A,n,k,coluna);
+                            //cout<<"O segundo BF e "<<Bfinal<<endl;
                         Bfinal=Bfinal+resto(A,n,k,coluna);
+                            cout<<"O Terceiro BF e "<<Bfinal<<endl<<endl;
+                            cout<<"O BF FINAL DO ELEMENTO"<<k<<" E IGUAL A"<<Bfinal<<endl<<endl;
                         B[k][coluna]=Bfinal;
                         Bfinal=0;
             }
     }
         cout<<endl<<endl;
         cout<<"A matriz B foi definida e sua forma e:"<<endl;
-            for(int k=0; k<n; k++){ 
-                for(int coluna=0; coluna<n; coluna++){
+            for(int k=1; k<=n; k++){ 
+                for(int coluna=1; coluna<=n; coluna++){
                        cout<<B[k][coluna]<<" ";
             }
             cout<<endl;
@@ -152,15 +134,22 @@ void B(float A[][MAX], int n){
                 }while(n>MAX);
             }
         float A[MAX][MAX];
+         for(int i=0;i<MAX;i++){
+                    for(int j=0;j<MAX;j++){
+                        A[i][j]=0;
+                    }
+                }
             cout<<"Digite os dados da matriz"<<endl;
-                for(int i=0;i<n;i++){
-                    for(int j=0;j<n;j++){
+                for(int i=1;i<=n;i++){
+                    for(int j=1;j<=n;j++){
                         cin>>A[i][j];
                     }
                 }
+                
+                
             cout<<"A matriz inserida e:"<<endl;
-                for(int i=0;i<n;i++){
-                    for(int j=0;j<n;j++){
+                for(int i=1;i<=n;i++){
+                    for(int j=1;j<=n;j++){
                         cout<<A[i][j]<<" ";
                     }
                     cout<<endl;
