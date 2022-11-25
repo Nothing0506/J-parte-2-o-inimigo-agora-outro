@@ -1,5 +1,11 @@
-#include<iostream>
+/*
+Nome: Henri Miranda Magalhães 
+Turma:Eng.Mecatrônica
+N°USP:13716600
+*/
 
+#include<iostream>
+#include<stdlib.h>
 using namespace std;
 
 const int MAX=20;///Define o tamanho máximo que a matriz A/B pode ter
@@ -112,17 +118,20 @@ public:
 };
 ////////////////////////////////////////////////////////////////////////////////
 int main(){
-    int n, confirmar;
+    int n, confirmar, confirmar2;
     Matriz Auxiliar;
-    cout<<"Qual a dimensao da matriz?"<<endl;
-    cin>>n;
-    if(n>MAX) {
+
+do{
+    cout<<"Qual a dimensao da matriz A ?"<<endl;
+    cin>>n;//define a dimensão da matriz A
+    	cout<<"Obrigado"<<endl;
+    if(n>MAX) {//se o n for maior que o máximo permitido, pede para inserir novamente
         do {
             cout<<"Digite novamente"<<endl;
             cin>>n;
         } while(n>MAX);
     }
-    float A[MAX][MAX];
+    float A[MAX][MAX];//define a matriz A e zera todos os seus elementos, ANTES de receber os dados, pois assim, problemas com o "lixo" serão resolvidos com uma lógica mais simples
     for(int i=0; i<MAX; i++) {
         for(int j=0; j<MAX; j++) {
             A[i][j]=0;
@@ -130,14 +139,15 @@ int main(){
     }
 
     do{
-    cout<<"Digite os dados da matriz"<<endl;
+    cout<<"Digite os dados da matriz"<<endl;//recebe os dados da matriz A
     for(int i=1; i<=n; i++) {
         for(int j=1; j<=n; j++) {
             cout<<"Elemento A"<<"["<<i<<"]"<<"["<<j<<"]"<<": "<<endl;
                 cin>>A[i][j];
             }
         }
-        cout<<"A matriz inserida e:"<<endl;
+            system("cls"); 
+        cout<<"A matriz inserida e:"<<endl;//Mostra a matriz A que acabou de ser insirida e dá a posibilidade de mudar os dados dessa matriz
     for(int i=1; i<=n; i++) {
         for(int j=1; j<=n; j++) {
             cout<<A[i][j]<<" ";
@@ -148,7 +158,14 @@ int main(){
             cout<<"1.SIM    2.NAO"<<endl;
                 cin>>confirmar;
     }while(confirmar<2);
+            system("cls"); 
         cout<<"Transformando a matriz A na matriz B"<<endl;
 
-    Auxiliar.B(A,n);
+    	Auxiliar.B(A,n);
+    		cout<<"Deseja realizar o processo novamente com uma nova matriz A?"<<endl;//Da a possibilidade ao usuário de continuar o procedimento com uma NOVA matriz A
+    			cout<<"1.SIM    2.NAO"<<endl;
+    				cin>>confirmar2;
+    			system("cls");
+	}while(confirmar2<2);
+		cout<<"Obrigado"<<endl;
 }
