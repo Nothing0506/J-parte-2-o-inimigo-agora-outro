@@ -1,0 +1,155 @@
+#include<iostream>
+
+using namespace std;
+
+const int MAX=20;///Define o tamanho máximo que a matriz A/B pode ter
+
+class Matriz{
+
+public:
+    float MLinha(float A[][MAX], int n, int linha, int coluna){///Função que pega os elementos da mesma linha do i,j
+        float *SalvaLinha[n],Constante,resul, auxi;
+        resul=0;
+        Constante=0;
+        for(int i=coluna-1; i<=coluna+1; i++) {
+            if(coluna==i) {
+                auxi=0;
+                SalvaLinha[i]=&auxi;
+            } else {
+                SalvaLinha[i]=&A[linha][i];
+                Constante=*SalvaLinha[i];
+                Constante=Constante*0.15;
+                resul=resul+Constante;
+            }
+        }
+        for(int i=0; i<n; i++) {
+            auxi=0;
+            SalvaLinha[i]=&auxi;
+            Constante=0;
+        }
+        return resul;
+    }
+////////////////////////////////////////////////////////////////////////////////
+    float MColuna(float A[][MAX], int n, int linha, int coluna)
+    {
+        float *Salvacoluna[n],Constante,resul,auxi;
+        resul=0;
+        Constante=0;
+        for(int i=linha-1; i<linha+2; i++) {
+            if(i==linha){
+                auxi=0;
+                Salvacoluna[i]=&auxi;
+            } else {
+                Salvacoluna[i]=&A[i][coluna];
+                Constante=*Salvacoluna[i];
+                Constante=Constante*0.15;
+                resul=resul+Constante;
+            }
+        }
+        for(int i=0; i<n; i++) {
+            auxi=0;
+            Salvacoluna[i]=&auxi;
+            Constante=0;
+        }
+        return resul;
+    }
+////////////////////////////////////////////////////////////////////////////////
+    float resto(float A[][MAX], int n, int linha, int coluna){
+        float *pLinha[MAX], Constante, resul, auxi;
+        resul=0;
+        Constante=0;
+
+        for(int i=linha-1; i<linha+2; i++) {
+            if(i==linha) {
+                auxi=0;
+                pLinha[i]=&auxi;
+            } else {
+                for(int j=coluna-1; j<coluna+2; j++) {
+                    if(j==coluna) {
+                        auxi=0;
+                        pLinha[j]=&auxi;
+                    } else {
+                        pLinha[j]=&A[i][j];
+                        Constante=*pLinha[j]+Constante;
+                    }
+                }
+
+                Constante=Constante*0.1;
+            }
+            resul=resul+Constante;
+            Constante=0;
+        }
+        return resul;
+    }
+////////////////////////////////////////////////////////////////////////////////
+    void B(float A[][MAX], int n){
+        float B[MAX][MAX],Bfinal;
+        Bfinal=0;
+
+        for(int linha=0; linha<MAX; linha++) {
+            for(int coluna=0; coluna<MAX; coluna++) {
+                B[linha][coluna]=0;
+            }
+        }
+
+        for(int linha=1; linha<=n; linha++) {
+            for(int coluna=1; coluna<=n; coluna++) {
+                Bfinal=MLinha(A,n,linha,coluna)+Bfinal;
+                Bfinal=Bfinal+MColuna(A,n,linha,coluna);
+                Bfinal=Bfinal+resto(A,n,linha,coluna);
+                B[linha][coluna]=Bfinal;
+                Bfinal=0;
+            }
+        }
+        cout<<endl<<endl;
+        cout<<"A matriz B foi definida e sua forma e:"<<endl;
+        for(int linha=1; linha<=n; linha++) {
+            for(int coluna=1; coluna<=n; coluna++) {
+                cout<<B[linha][coluna]<<" ";
+            }
+            cout<<endl;
+        }
+    }
+};
+////////////////////////////////////////////////////////////////////////////////
+int main(){
+    int n, confirmar;
+    Matriz Auxiliar;
+    cout<<"Qual a dimensao da matriz?"<<endl;
+    cin>>n;
+    if(n>MAX) {
+        do {
+            cout<<"Digite novamente"<<endl;
+            cin>>n;
+        } while(n>MAX);
+    }
+    float A[MAX][MAX];
+    for(int i=0; i<MAX; i++) {
+        for(int j=0; j<MAX; j++) {
+            A[i][j]=0;
+        }
+    }
+
+    do{
+    cout<<"Digite os dados da matriz"<<endl;
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++) {
+            cout<<"Elemento A"<<"["<<i<<"]"<<"["<<j<<"]"<<": "<<endl;
+                cin>>A[i][j];
+            }
+        }
+        cout<<"A matriz inserida e:"<<endl;
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++) {
+            cout<<A[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        cout<<"Deseja alterar a matriz?"<<endl;
+            cout<<"1.SIM    2.NAO"<<endl;
+                cin>>confirmar;
+    }while(confirmar<1);
+        cout<<"Transformando a matriz A na matriz B"<<endl;
+
+    Auxiliar.B(A,n);
+}
