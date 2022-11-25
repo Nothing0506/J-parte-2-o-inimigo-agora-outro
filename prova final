@@ -7,69 +7,68 @@ const int MAX=20;///Define o tamanho máximo que a matriz A/B pode ter
 class Matriz{
 
 public:
-    float MLinha(float A[][MAX], int n, int linha, int coluna){///Função que pega os elementos da mesma linha do i,j
-        float *SalvaLinha[n],Constante,resul, auxi;
+    float MLinha(float A[][MAX], int n, int linha, int coluna){///Função que pega os elementos da MESMA LINHA do do A[i][j]
+        float *SalvaLinha[n],Constante,resul, auxi;//cria o vetor SalvaLinha que pega todos os elementos da mesma linha do do A[i][j]
         resul=0;
         Constante=0;
-        for(int i=coluna-1; i<=coluna+1; i++) {
-            if(coluna==i) {
-                auxi=0;
-                SalvaLinha[i]=&auxi;
+        for(int i=coluna-1; i<=coluna+1; i++) {//entra em um loop que vai pegar os elementos do lado do A[i][j]
+            if(coluna==i) {//se o i for igual a "coluna", é porque ele está olhado para o elemento "A[*][coluna]", ou seja, está olando o proprio do A[i][j].
+                auxi=0;//o auxi só existe para podermos declarar o vetor como 0 caso necessário. Isso em TODAS as funções
+                SalvaLinha[i]=&auxi;//quando o if acontecer, queremos que o elemento do vetor Salvalinha seja zero, pois não queremos o do A[i][j-1], e sim o do A[i][j] e do A[i][j+1]
             } else {
-                SalvaLinha[i]=&A[linha][i];
-                Constante=*SalvaLinha[i];
-                Constante=Constante*0.15;
-                resul=resul+Constante;
+                SalvaLinha[i]=&A[linha][i];//quando if não ocorrer, é porque pegamos os demais elementos sem ser o próprio do A[i][j]
+                Constante=*SalvaLinha[i];//colocamos a constante para ser igual ao elemento que o SalvaLinha acabou de pegar
+                Constante=Constante*0.15;//multiplicamos esse valor pego por 0.15, pois foi a descrição dada na questão
+                resul=resul+Constante;//somamos esse elemento pego com os demais que vão(ou já haviam)ser pegos
             }
         }
         for(int i=0; i<n; i++) {
             auxi=0;
-            SalvaLinha[i]=&auxi;
+            SalvaLinha[i]=&auxi;//zeramos o vetor e a constante após todo procedimento para que o vetor esteja vazio para os demais elementos que vão ser calculados nos próximos do A[i][j]
             Constante=0;
         }
         return resul;
     }
-////////////////////////////////////////////////////////////////////////////////
-    float MColuna(float A[][MAX], int n, int linha, int coluna)
-    {
-        float *Salvacoluna[n],Constante,resul,auxi;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    float MColuna(float A[][MAX], int n, int linha, int coluna){///Função que pega os elementos da MESMA COLUNA do A[i][j]
+        float *Salvacoluna[n],Constante,resul,auxi;//cria o vetor SalvaColuna que pega todos os elementos da mesma Coluna do do A[i][j]
         resul=0;
         Constante=0;
-        for(int i=linha-1; i<linha+2; i++) {
-            if(i==linha){
+        for(int i=linha-1; i<linha+2; i++) {//entra em um loop que vai pegar os elementos do acima e abaixo do A[i][j]
+            if(i==linha){//quando o if acontecer, queremos que o elemento do vetor Salvalinha seja zero, pois não queremos o do A[i][j-1], e sim o do A[i][j] e do A[i][j+1]
                 auxi=0;
-                Salvacoluna[i]=&auxi;
+                Salvacoluna[i]=&auxi;//se o i for igual a "linha", é porque ele está olhado para o elemento "A[linha][*]", ou seja, está olando o proprio do A[i][j].
             } else {
-                Salvacoluna[i]=&A[i][coluna];
-                Constante=*Salvacoluna[i];
+                Salvacoluna[i]=&A[i][coluna];//quando if não ocorrer, é porque pegamos os demais elementos sem ser o próprio do A[i][j]
+                Constante=*Salvacoluna[i];//realiza o mesmo procedimento do MLinha
                 Constante=Constante*0.15;
                 resul=resul+Constante;
             }
         }
-        for(int i=0; i<n; i++) {
+        for(int i=0; i<n; i++) {//Assim como no MLinha, zeramos o vetor SalvaColuna e a Constante para que possa realizar o procedimento para os demais elementos que vão ser calculados ons próximos A[i][j]
             auxi=0;
             Salvacoluna[i]=&auxi;
             Constante=0;
         }
         return resul;
     }
-////////////////////////////////////////////////////////////////////////////////
-    float resto(float A[][MAX], int n, int linha, int coluna){
-        float *pLinha[MAX], Constante, resul, auxi;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    float resto(float A[][MAX], int n, int linha, int coluna){//Função que pega os elementos nas diagonais do A[i][j]
+        float *pLinha[MAX], Constante, resul, auxi;//cria o vetor pLinha que vai pegar os elementos da linha acima e abaixo da linha do A[i][j]
         resul=0;
         Constante=0;
 
-        for(int i=linha-1; i<linha+2; i++) {
-            if(i==linha) {
+        for(int i=linha-1; i<linha+2; i++) {//entra no loop para "capturar" os elementos da linha acima e abaixo de A[i][j]
+            if(i==linha) {// se o i for igual a "linha" do A[linha][*], é porque o loop está olhando para linha do próprio A[i][j], ou seja não queremos
                 auxi=0;
                 pLinha[i]=&auxi;
-            } else {
-                for(int j=coluna-1; j<coluna+2; j++) {
-                    if(j==coluna) {
+            } else {//caso o if não ocorra, é poque o loop está na linha "i-1" ou "i+1"
+                for(int j=coluna-1; j<coluna+2; j++) {//inicia um outro loop para certificar que não está pegando elemento da mesma coluna
+                    if(j==coluna) {//caso j seja igual a coluna, é porque o for está "olhando" para o elemento logo acima/abaixo do A[i][j], e não queremos esse elemento
                         auxi=0;
                         pLinha[j]=&auxi;
-                    } else {
-                        pLinha[j]=&A[i][j];
+                    } else {//caso if não ocorra, é pq o for realmente está olhando para os elementos nas diagonais do A[i][j]
+                        pLinha[j]=&A[i][j];//assim como no Mlinha e MColuna, usamos o vetor para pegar os elementos desejados, colocamos a constante para ser o elemento que acabou se ser pego e realizamos as contas
                         Constante=*pLinha[j]+Constante;
                     }
                 }
@@ -81,29 +80,29 @@ public:
         }
         return resul;
     }
-////////////////////////////////////////////////////////////////////////////////
-    void B(float A[][MAX], int n){
-        float B[MAX][MAX],Bfinal;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void B(float A[][MAX], int n){//Função que "Transforma" a matriz A na matriz B
+        float B[MAX][MAX],Bfinal;//Assim como a matriz A, B terá no máximo as dimensões MAX por MAX
         Bfinal=0;
 
         for(int linha=0; linha<MAX; linha++) {
             for(int coluna=0; coluna<MAX; coluna++) {
-                B[linha][coluna]=0;
+                B[linha][coluna]=0;//define todos os elementos de B como 0 para nos livrarmos dos "Lixos"
             }
         }
 
-        for(int linha=1; linha<=n; linha++) {
+        for(int linha=1; linha<=n; linha++) {//Limita a "definição" dos elementos a uma matriz NxN
             for(int coluna=1; coluna<=n; coluna++) {
-                Bfinal=MLinha(A,n,linha,coluna)+Bfinal;
-                Bfinal=Bfinal+MColuna(A,n,linha,coluna);
-                Bfinal=Bfinal+resto(A,n,linha,coluna);
-                B[linha][coluna]=Bfinal;
-                Bfinal=0;
+                Bfinal=MLinha(A,n,linha,coluna)+Bfinal;//pega os elementos da mesma linha que A[i][j], soma e multiplica por 0.15
+                Bfinal=Bfinal+MColuna(A,n,linha,coluna);;//pega os elementos da mesma coluna que A[i][j], soma e multiplica por 0.15
+                Bfinal=Bfinal+resto(A,n,linha,coluna);;//pega os elementos da diagonal A[i][j], soma e multiplica por 0.1
+                B[linha][coluna]=Bfinal;//diz que o resultado dessas operações é igual ao elemento B[i][j]
+                Bfinal=0;//zera o Bfinal para realizar o procedimento para os demais B[i][j]
             }
         }
         cout<<endl<<endl;
         cout<<"A matriz B foi definida e sua forma e:"<<endl;
-        for(int linha=1; linha<=n; linha++) {
+        for(int linha=1; linha<=n; linha++) {//Mostra o resultado da matriz B
             for(int coluna=1; coluna<=n; coluna++) {
                 cout<<B[linha][coluna]<<" ";
             }
@@ -148,7 +147,7 @@ int main(){
         cout<<"Deseja alterar a matriz?"<<endl;
             cout<<"1.SIM    2.NAO"<<endl;
                 cin>>confirmar;
-    }while(confirmar<1);
+    }while(confirmar<2);
         cout<<"Transformando a matriz A na matriz B"<<endl;
 
     Auxiliar.B(A,n);
