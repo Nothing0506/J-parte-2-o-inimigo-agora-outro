@@ -1,34 +1,319 @@
 #include<iostream>
 #include<math.h>
 
-
 using namespace std;
+const int MAX=50;
+const int DisMAX=11;
 
-class jogo{
-    public:
-};
 
-int main(){
-    int numAnel;
-        cout<<"Quantos aneis vao ser inseridos para o jogo?"<<endl;
-        cout<<"OBS: max de 7 e min de 3"<<endl;
-            cin>>numAnel;
-        if(numAnel<3 || numAnel>7){
-            do{
-                cout<<"Escolha novamente"<<endl;
-                    cin>>numAnel;
-            }while(numAnel<3 || numAnel>7);
+void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+
+    for(int i=0; i<n; i++){///define os discos
+        int auxi;
+        auxi=0;
+            do{ 
+                discos[i][auxi]='#';
+                auxi++;
+            }while(auxi<=i+2);
+        discosNUM[i+1]=i+1;
+        auxi=0;
+    }
+       /* cout<<"Os discos ae"<<endl; PARTE QUE PRINTA OS DICOS SÓ PRA VER COMO ELES TÃO DE CARACTERE
+            
+            for(int i=0; i<n; i++){
+                int auxi;
+                auxi=0;
+                 cout<<"DISCO "<<i<<endl;
+                    do{
+                        cout<<discos[i][auxi];
+                            auxi++;
+                    }while(auxi<=i+2);
+
+                cout<<endl;
+                auxi=0;
+            }*/
+
+
+        for(int j=0; j<(n+2)*5; j++){
+                Jogo[n][j]='=';
+                JogoNUM[n][j]=8;
         }
-    int Pino1[numAnel+2], Pino2[numAnel+2], Pino3[numAnel+2], anel[numAnel];
-        for(int i=0; i<numAnel;i++){
-            anel[i]=numAnel-i;
+
+    for(int i=1; i<=3; i++){
+            int auxi;
+                auxi=(n+2)*i;
+        for(int j=0; j<n; j++){
+            Jogo[j][auxi]='|';
+            JogoNUM[j][auxi]=0;
         }
-        for(int i=0; i<numAnel;i++){
-            Pino1[i]=anel[numAnel-i];
+    }
+
+    for(int i=0; i<n; i++){///Coloca os dicos nos pinos versão CARACTERE
+        int auxi, auxi2;
+        auxi=0;
+        auxi2=(n+2-i);      
+            do{ 
+                Jogo[i][auxi2]=discos[i][auxi];
+                    auxi++;
+                    auxi2++;
+            }while(auxi2<=n+i+2);//deixei o auxi2<=n+2+i pq ficou mais bonito, mas lembra que se der pau depois, tenta mudar pra auxi<=i+2
+
+        auxi=0;
+    }
+
+    for(int i=0; i<n; i++){
+                JogoNUM[i][n+2]=discosNUM[i+1];
         }
-     cout<<"A ordem dos aneis no pino um e"<<endl;
-        for(int i=0; i<numAnel; i++){
-            cout<<Pino1[i]<<endl;
-        }   
+
+        for(int i=0; i<n+1; i++){ //PRINTA A MATRIZ ASSOCIADA DE NUMERO SÓ PRA EU PODER VERIFICAR COMO TÃO DISPOSTAS AS COISAS
+            for(int j=0; j<(n+2)*4; j++){
+                cout<<JogoNUM[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
+
+        for(int i=0; i<n+1; i++){
+            for(int j=0; j<(n+2)*4; j++){
+                cout<<Jogo[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
 }
 
+void printar(int n, char Jogo[][MAX], char discos[][DisMAX]){
+
+    for(int i=0; i<n+1; i++){
+            for(int j=0; j<(n+2)*4; j++){
+                cout<<Jogo[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
+        
+}
+
+int lugarDis(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//localiza o disco
+    int local;
+        for(int i=0; i<n+1; i++){
+            for(int j=0; j<(n+2)*4; j++){
+
+                if(JogoNUM[i][j]==discosNUM[jogada]){
+                    local=j;
+                        /*if(local=n+2){
+                            cout<<"O disco "<<jogada<<" esta no pino 1"<<endl;
+                            break;
+                        }
+
+                        if(local=(n+2)*2){
+                            cout<<"O disco "<<jogada<<" esta no pino 2"<<endl;
+                            break;
+                        }
+
+                        if(local=(n+2)*3){
+                            cout<<"O disco "<<jogada<<" esta no pino 3"<<endl;
+                            break;
+                        }*/
+                    break;
+                }
+            }
+        }
+    return local;
+}
+
+int DisLinha(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){
+    int local, LocPino;
+        LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
+        for(int i=0; i<n; i++){//pega a linha que o disco tava
+            if(JogoNUM[i][LocPino]==jogada){
+                local=i;
+                    cout<<"O disco "<<jogada<<" esta na linha "<<local<<endl;
+            }
+        }
+    return local;
+
+}
+
+int verificarDisco(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){
+    int LocPino, local;
+        LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
+        local=DisLinha(n, jogada, discosNUM,JogoNUM);
+
+            if(local==0){
+                cout<<"Jogada valida"<<endl;
+            }
+
+            if(local>0){
+
+                    if(JogoNUM[local-1][LocPino]!=0){
+    
+                    do{
+                        cout<<"Jogada invalida. Ha outro disco emcima do desejo. Escolha outro disco"<<endl;
+                        cin>>jogada;
+                            LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
+                            local=DisLinha(n, jogada, discosNUM,JogoNUM);   
+                    }while(JogoNUM[local-1][LocPino]!=0 && local!=0);
+
+                }
+
+        }
+    return jogada;
+
+}
+
+
+
+int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX]){
+    int esco, auxiLinha;
+        auxiLinha=DisLinha(n, jogada, discosNUM,JogoNUM);
+        joColuna=(n+2)*joColuna;
+    for(int i=0; i<n; i++){
+            if(JogoNUM[i][joColuna]!=0 && auxiLinha!=0){
+                
+                if(JogoNUM[i][joColuna]<jogada){
+                    do{
+                        cout<<"O disco nao pode ser movido para essa posicao, pois ha um outro disco menor no local"<<endl;
+                        cout<<"Deseja escolher outro pino ou outro disco?"<<endl;
+                        cout<<"1. PINO  2.DISCO"<<endl;
+                            cin>>esco;
+
+                        if(esco==2){
+                            cout<<"Escolha outro disco"<<endl;
+                                cin>>jogada;
+                            jogada=verificarDisco(n, jogada, discosNUM,JogoNUM);
+                            cout<<"Escolha o pino para jogar"<<endl;
+                                cin>>joColuna;
+                                joColuna=(n+2)*joColuna;
+                        }
+
+                        if(esco==1){
+                            cout<<"Escolha o outro pino para jogar"<<endl;
+                                cin>>joColuna;
+                                joColuna=(n+2)*joColuna;
+                        }
+
+                    }while(JogoNUM[i][joColuna]>jogada);
+
+                }
+
+            }
+        }
+    return joColuna;
+}
+
+
+void movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+
+    int auxiLinha, auxiColuna, linha;
+
+        auxiLinha=DisLinha(n, jogada, discosNUM,JogoNUM);
+        auxiColuna=lugarDis(n, jogada, discosNUM,JogoNUM);
+        linha=0;
+
+    for(int i=n; i>=0; i=i-1){
+        
+        if(JogoNUM[i][joColuna]==0){
+            linha=i;
+            break;
+        }
+
+    }
+
+        JogoNUM[linha][joColuna]=jogada;
+        JogoNUM[auxiLinha][auxiColuna]=0;
+
+
+    for(int i=0; i<n+1; i++){ //PRINTA A MATRIZ ASSOCIADA DE NUMERO SÓ PRA EU PODER VERIFICAR COMO TÃO DISPOSTAS AS COISAS
+            for(int j=0; j<(n+2)*4; j++){
+                cout<<JogoNUM[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
+
+    //for(int i=n-1; i>=0; i=i-1){///Coloca os dicos nos pinos versão CARACTERE
+        int auxi, auxi2;
+        auxi=auxiColuna-jogada;
+        //auxi2=(joColuna-i);    
+        
+        
+            do{
+                Jogo[auxiLinha][auxi]=' ';
+                    auxi++;
+                    //auxi2++;
+            }while(auxi<auxiColuna+jogada);
+                auxi=0;
+ 
+
+            auxi2=joColuna-jogada;
+            auxi=0;
+            do{ 
+                Jogo[linha][auxi2]=discos[jogada][auxi];//aqui no Jogo[i][joColuna] era Jogo[i][auxi2], mas ele tava colocando caractere vazio no lugar, se der pau nos discos 2 pra cima, tenta mudar essa parte e vê se funciona
+                    auxi2++;
+                    auxi++;
+            }while(auxi2<=joColuna+jogada);
+
+
+          
+
+        //break;
+
+    //}
+        Jogo[auxiLinha][auxiColuna]='|';
+    printar(n, Jogo, discos);
+
+}
+
+
+int vitoria(int n, int JogoNUM[][MAX]){
+
+    int valor;
+    valor=0;
+
+    for(int i=0; i<n; i++){
+        
+        if(JogoNUM[i][(n+2)*3]==i+1){
+            valor++;
+        }
+
+    }
+
+    return valor;
+
+}
+
+
+int main (){
+    char Jogo[MAX][MAX], discos[DisMAX][DisMAX];
+    int n, jogada, joColuna, fimJogo;
+    int JogoNUM[MAX][MAX], discosNUM[DisMAX];
+       for(int i=0; i<MAX; i++){
+            for(int j=0; j<MAX; j++){
+                    Jogo[i][j]=' ';
+                    JogoNUM[i][j]=9;
+            }
+        }
+    cout<<"Quantos aneis serao inseridos para o jogo?( Obs: 7 e o MAX e 3 e o MIN)"<<endl;
+        cin>>n;
+
+        if(n>7 ||n<3){
+            do{
+                cout<<"Valor invalido, digite novamente"<<endl;
+                    cin>>n;
+            }while(n>7 ||n<3);
+        }
+    cout<<"Os aneis estao dispostos da seguinte maneira"<<endl;
+        comeco(n, discosNUM,JogoNUM, Jogo, discos);
+    do{
+
+        cout<<"Qual anel voce deseja mover?"<<endl;
+            cin>>jogada;
+            jogada=verificarDisco(n, jogada, discosNUM,JogoNUM);
+        cout<<"Em qual pino voce deseja colocar o anel?"<<endl;
+            cin>>joColuna;
+                joColuna=verificarPino(n, jogada, joColuna, discosNUM,JogoNUM);
+            movimento(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
+        fimJogo=vitoria(n, JogoNUM);
+
+    }while(fimJogo<n);
+
+    cout<<"Parabens, voce ganhou!!!"<<endl;
+
+}
