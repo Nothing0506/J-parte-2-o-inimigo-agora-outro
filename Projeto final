@@ -100,6 +100,18 @@ int DisLinha(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//localiza o
 }
 
 int verificarDisco(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){
+	
+	if(jogada>n || jogada<1){
+		do{
+			
+			cout<<"Disco invalido. Digite novamente"<<endl;
+			cin>>jogada;
+			
+		}while(jogada>n || jogada<1);
+		
+	}
+	
+	
     int LocPino, local;
         LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
         local=DisLinha(n, jogada, discosNUM,JogoNUM);
@@ -129,10 +141,41 @@ int verificarDisco(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){
 
 
 int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX]){
-    int esco, auxiLinha;
+	
+	
+	if(joColuna>3 || joColuna<1){
+		do{
+			
+			cout<<"Pino invalido. Digite novamente"<<endl;
+			cin>>joColuna;
+			
+		}while(jogada>n || jogada<1);
+		
+	}
+	
+	
+	
+    int esco, auxiLinha, auxiColuna;
         auxiLinha=DisLinha(n, jogada, discosNUM,JogoNUM);
+        auxiColuna=lugarDis(n, jogada, discosNUM,JogoNUM);
         joColuna=(n+2)*joColuna;
+        
+        
+        if(joColuna==auxiColuna){
+        	
+        	do{
+        		
+        		cout<<"O disco ja esta nessa coluna. Escolha outra"<<endl;
+        			cin>>joColuna;
+        				joColuna=(n+2)*joColuna;
+
+			}while(joColuna==auxiColuna);
+        	
+		}
+        
+        
     for(int i=0; i<n; i++){
+    
             if(JogoNUM[i][joColuna]!=0 && auxiLinha!=0){
                 
                 if(JogoNUM[i][joColuna]<jogada){
