@@ -316,6 +316,7 @@ int main (){
         cout<<"Em qual pino voce deseja colocar o anel?"<<endl;
             cin>>joColuna;
                 joColuna=verificarPino(n, jogada, joColuna, discosNUM,JogoNUM);
+                	system("cls");
             removerDisco(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
             moveDisco(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
         fimJogo=vitoria(n, JogoNUM);
