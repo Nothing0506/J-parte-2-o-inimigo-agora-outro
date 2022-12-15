@@ -190,7 +190,7 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
                                 joColuna=(n+2)*joColuna;
                         }
 
-                    }while(JogoNUM[i][joColuna]>jogada);
+                    }while(JogoNUM[i][joColuna]<jogada && JogoNUM[i][joColuna]!=0);
 
                 }
 
@@ -200,7 +200,7 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
 }
 
 
-void movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+int movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
 
     int auxiLinha, auxiColuna, linha;
 
@@ -229,12 +229,12 @@ void movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MA
         }
 
     //for(int i=n-1; i>=0; i=i-1){///Coloca os dicos nos pinos versão CARACTERE
-        int auxi, auxi2;
-        auxi=auxiColuna-jogada;
+        //int auxi, auxi2;
+        //auxi=auxiColuna-jogada;
         //auxi2=(joColuna-i);    
         
         
-            do{
+           /* do{
                 Jogo[auxiLinha][auxi]=' ';
                     auxi++;
                     //auxi2++;
@@ -257,7 +257,43 @@ void movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MA
 
     //}
         Jogo[auxiLinha][auxiColuna]='|';
-    printar(n, Jogo, discos);
+    printar(n, Jogo, discos);*/
+
+    return linha;
+
+}
+
+
+void removerDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+
+    int auxiLinha, auxiColuna, auxi;
+
+            auxiLinha=DisLinha(n, jogada, discosNUM,JogoNUM);
+            auxiColuna=lugarDis(n, jogada, discosNUM,JogoNUM);
+                auxi=jogada-1;
+        
+        for(int j=auxiColuna-auxi; j<=auxiColuna+auxi ; j++){
+                Jogo[auxiLinha][j]=' ';
+        }
+
+        Jogo[auxiLinha][auxiColuna]='|';
+        
+}
+
+
+void moveDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+
+    int linha, auxi, auxi2;
+        linha=movimento(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
+            auxi=0;
+                auxi2=jogada-1;
+
+        for(int j=joColuna-auxi2; j<=joColuna+auxi2 ; j++){
+                Jogo[linha][j]=discos[auxi2][auxi];
+                auxi++;
+        }
+        
+        printar(n, Jogo, discos);
 
 }
 
@@ -309,7 +345,8 @@ int main (){
         cout<<"Em qual pino voce deseja colocar o anel?"<<endl;
             cin>>joColuna;
                 joColuna=verificarPino(n, jogada, joColuna, discosNUM,JogoNUM);
-            movimento(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
+            removerDisco(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
+            moveDisco(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
         fimJogo=vitoria(n, JogoNUM);
 
     }while(fimJogo<n);
