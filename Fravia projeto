@@ -1,6 +1,6 @@
 
 int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX]){
-	if(joColuna>3 || joColuna<1){//certifica-se que a jogada do pino é valida
+	if(joColuna>3 || joColuna<1){
 		do{
 			cout<<"Pino invalido. Digite novamente"<<endl;
 			cin>>joColuna;
@@ -10,20 +10,20 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
         auxiLinha=DisLinha(n, jogada, discosNUM,JogoNUM);
         auxiColuna=lugarDis(n, jogada, discosNUM,JogoNUM);
         joColuna=(n+2)*joColuna;
-        if(joColuna==auxiColuna){//se o disco já estiver no pino escolhido, o pino de jogada devera ser alterado
+        if(joColuna==auxiColuna){
         	do{
         		cout<<"O disco ja esta nessa coluna. Escolha outra"<<endl;
         			cin>>joColuna;
         				joColuna=(n+2)*joColuna;
 			}while(joColuna==auxiColuna);
 		}
-    for(int i=0; i<n; i++){//faz uma busca de valores pelo pino escolhido
-            if(JogoNUM[i][joColuna]!=0 && auxiLinha!=0){//caso algum valor do pino seja diferente de 0, o programa entra nas condições para certifica-se se ainda é posspivel jogar naquele pino
-                if(JogoNUM[i][joColuna]<jogada){//se o valor de um disco no pino for menor que o do disco escolhido na jogada, o programa não permite essa jogada
+    for(int i=0; i<n; i++){
+            if(JogoNUM[i][joColuna]!=0 && auxiLinha!=0){
+                if(JogoNUM[i][joColuna]<jogada){
                     do{
                         cout<<"O disco nao pode ser movido para essa posicao, pois ha um outro disco menor no local"<<endl;
                         cout<<"Deseja escolher outro pino ou outro disco?"<<endl;
-                        cout<<"1. PINO  2.DISCO"<<endl;//da a escolha ao jogador de trocar o disco que ele deseja jogar, ou de apenas trocar o pino o qual deseja inserir o disco já escolhido
+                        cout<<"1. PINO  2.DISCO"<<endl;
                             cin>>esco;
                         if(esco==2){
                             cout<<"Escolha outro disco"<<endl;
