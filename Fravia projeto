@@ -6,30 +6,30 @@ const int MAX=50;
 const int DisMAX=11;
 
 
-void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){///Define as configurações de como os discos se organizam no começo de toda partida
+void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
     for(int i=0; i<n; i++){///Define os discos, e seus respectivos "tamanhos"
         int auxi;
         auxi=0;
             do{ 
-                discos[i][auxi]='#';//atribui o caractere # para representar o disco
+                discos[i][auxi]='#';
                 auxi++;
             }while(auxi<=i+2);
-            discosNUM[i+1]=i+1;//define o numero de cada disco no vetor de discos numerico
+            discosNUM[i+1]=i+1;
                 auxi=0;
         }
-        for(int j=0; j<(n+2)*5; j++){//Define a base do jogo, onde os pinos estão "cravados"
-                Jogo[n][j]='=';//define o caractere = para representar a base
-                JogoNUM[n][j]=8;//define o numero 8 para representar a base na matriz de numero, pois o maior valor de um disco e 7
+        for(int j=0; j<(n+2)*5; j++){
+                Jogo[n][j]='=';
+                JogoNUM[n][j]=8;
         }
     for(int i=1; i<=3; i++){//define os pinos e sua localização em relação a base
             int auxi;
                 auxi=(n+2)*i;
         for(int j=0; j<n; j++){
-            Jogo[j][auxi]='|';//define o caractere | para representar o pino
-            JogoNUM[j][auxi]=0;//define o numero 0 para representar o pino na matriz de numeros
+            Jogo[j][auxi]='|';
+            JogoNUM[j][auxi]=0;
         }
     }
-    for(int i=0; i<n; i++){///Coloca os dicos nos pinos versão CARACTERE
+    for(int i=0; i<n; i++){
         int auxi, auxi2;
         auxi=0;
         auxi2=(n+2-i);      
@@ -41,7 +41,7 @@ void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char di
 
         auxi=0;
     }
-    for(int i=0; i<n; i++){//coloca os dicos nos pinos na versão NUMERICA
+    for(int i=0; i<n; i++){
                 JogoNUM[i][n+2]=discosNUM[i+1];
         }
 
