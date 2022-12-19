@@ -6,31 +6,31 @@ const int MAX=50;
 const int DisMAX=11;
 
 
-void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){///Define as configurações de como os discos se organizam no começo de toda partida
 
-    for(int i=0; i<n; i++){///define os discos
+    for(int i=0; i<n; i++){///Define os discos, e seus respectivos "tamanhos"
         int auxi;
         auxi=0;
             do{ 
-                discos[i][auxi]='#';
+                discos[i][auxi]='#';//atribui o caractere # para representar o disco
                 auxi++;
             }while(auxi<=i+2);
-            discosNUM[i+1]=i+1;
+            discosNUM[i+1]=i+1;//define o numero de cada disco no vetor de discos numerico
                 auxi=0;
         }
 
 
-        for(int j=0; j<(n+2)*5; j++){
-                Jogo[n][j]='=';
-                JogoNUM[n][j]=8;
+        for(int j=0; j<(n+2)*5; j++){//Define a base do jogo, onde os pinos estão "cravados"
+                Jogo[n][j]='=';//define o caractere = para representar a base
+                JogoNUM[n][j]=8;//define o numero 8 para representar a base na matriz de numero, pois o maior valor de um disco e 7
         }
 
-    for(int i=1; i<=3; i++){
+    for(int i=1; i<=3; i++){//define os pinos e sua localização em relação a base
             int auxi;
                 auxi=(n+2)*i;
         for(int j=0; j<n; j++){
-            Jogo[j][auxi]='|';
-            JogoNUM[j][auxi]=0;
+            Jogo[j][auxi]='|';//define o caractere | para representar o pino
+            JogoNUM[j][auxi]=0;//define o numero 0 para representar o pino na matriz de numeros
         }
     }
 
@@ -47,20 +47,20 @@ void comeco(int n, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char di
         auxi=0;
     }
 
-    for(int i=0; i<n; i++){
+    for(int i=0; i<n; i++){//coloca os dicos nos pinos na versão NUMERICA
                 JogoNUM[i][n+2]=discosNUM[i+1];
         }
 
 
         for(int i=0; i<n+1; i++){
             for(int j=0; j<(n+2)*4; j++){
-                cout<<Jogo[i][j];
+                cout<<Jogo[i][j];//Printa a forma inicial do jogo
             }
             cout<<endl;
         }
 }
 
-void printar(int n, char Jogo[][MAX], char discos[][DisMAX]){
+void printar(int n, char Jogo[][MAX], char discos[][DisMAX]){//Função que printa o jogo em qualquer estágio 
 
     for(int i=0; i<n+1; i++){
             for(int j=0; j<(n+2)*4; j++){
@@ -72,12 +72,12 @@ void printar(int n, char Jogo[][MAX], char discos[][DisMAX]){
 }
 
 
-int lugarDis(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//localiza o disco em coluna
+int lugarDis(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//Localiza a coluna na qual o disco NUMERICO selecionado para jogada está
     int local;
-        for(int i=0; i<n+1; i++){
+        for(int i=0; i<n+1; i++){//faz uma busca por todas as linhas e colunas da matriz numerica
             for(int j=0; j<(n+2)*4; j++){
 
-                if(JogoNUM[i][j]==discosNUM[jogada]){
+                if(JogoNUM[i][j]==discosNUM[jogada]){//se o valor da coluna for igual ao valor do disco selecionado na jogada, o programa salva a coluna e retorna esse valor
                     local=j;
                         break;
                 }
@@ -87,11 +87,11 @@ int lugarDis(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//localiza o
 }
 
 
-int DisLinha(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//localiza o disco em linha
+int DisLinha(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//Localiza a linha a qual o disco selecionado para jogada está
     int local, LocPino;
-        LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
-        for(int i=0; i<n; i++){//pega a linha que o disco tava
-            if(JogoNUM[i][LocPino]==jogada){
+        LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);//Pega a coluna do disco, já localizada, diminuindo o range de busca do programa
+        for(int i=0; i<n; i++){//Faz uma busca por todos as linhas da coluna do disco
+            if(JogoNUM[i][LocPino]==jogada){//se for igual, o programa salva a linha localizada e retorna esse valor
                 local=i;
             }
         }
@@ -99,9 +99,9 @@ int DisLinha(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//localiza o
 
 }
 
-int verificarDisco(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){
+int verificarDisco(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){//Função que verifica se há outro disco em cima do escolhido para jogada
 	
-	if(jogada>n || jogada<1){
+	if(jogada>n || jogada<1){//Certifica se a jogada é um valor possível
 		do{
 			
 			cout<<"Disco invalido. Digite novamente"<<endl;
@@ -116,34 +116,34 @@ int verificarDisco(int n, int jogada, int *discosNUM, int JogoNUM[][MAX]){
         LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
         local=DisLinha(n, jogada, discosNUM,JogoNUM);
 
-            if(local==0){
+            if(local==0){//se no pino numerico o valor da linha do disco for 0, então não há nada acima do disco, logo a jogada é valida
                 cout<<"Jogada valida"<<endl;
             }
 
             if(local>0){
 
-                    if(JogoNUM[local-1][LocPino]!=0){
+                    if(JogoNUM[local-1][LocPino]!=0){//Se no pino numerico o valor da linha é diferente de 0, o programa procura para saber se tem alguma elemento na lina acima do disco selecionado para jogada, caso o valor do elemento da linha acima seja diferente de 0, o programa não deixa a jogada
     
                     do{
-                        cout<<"Jogada invalida. Ha outro disco emcima do desejo. Escolha outro disco"<<endl;
+                        cout<<"Jogada invalida. Ha outro disco em cima do desejo. Escolha outro disco"<<endl;
                         cin>>jogada;
                             LocPino=lugarDis(n, jogada, discosNUM,JogoNUM);
                             local=DisLinha(n, jogada, discosNUM,JogoNUM);   
-                    }while(JogoNUM[local-1][LocPino]!=0 && local!=0);
+                    }while(JogoNUM[local-1][LocPino]!=0 && local!=0);//realiza o loop enquanto o valor da linha acima do disco selecionado for diferente de 0 ou enquanto a linha a qual o disco se encontra não for 0
 
                 }
 
         }
-    return jogada;
+    return jogada;//retorna o valor do disco selecionado para jogada, caso ele tenha sido alterado ou não
 
 }
 
 
 
-int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX]){
+int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX]){//verifica se o pino existe ou se está disponível para jogada
 	
 	
-	if(joColuna>3 || joColuna<1){
+	if(joColuna>3 || joColuna<1){//certifica-se que a jogada do pino é valida
 		do{
 			
 			cout<<"Pino invalido. Digite novamente"<<endl;
@@ -161,7 +161,7 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
         joColuna=(n+2)*joColuna;
         
         
-        if(joColuna==auxiColuna){
+        if(joColuna==auxiColuna){//se o disco já estiver no pino escolhido, o pino de jogada devera ser alterado
         	
         	do{
         		
@@ -174,15 +174,15 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
 		}
         
         
-    for(int i=0; i<n; i++){
+    for(int i=0; i<n; i++){//faz uma busca de valores pelo pino escolhido
     
-            if(JogoNUM[i][joColuna]!=0 && auxiLinha!=0){
+            if(JogoNUM[i][joColuna]!=0 && auxiLinha!=0){//caso algum valor do pino seja diferente de 0, o programa entra nas condições para certifica-se se ainda é posspivel jogar naquele pino
                 
-                if(JogoNUM[i][joColuna]<jogada){
+                if(JogoNUM[i][joColuna]<jogada){//se o valor de um disco no pino for menor que o do disco escolhido na jogada, o programa não permite essa jogada
                     do{
                         cout<<"O disco nao pode ser movido para essa posicao, pois ha um outro disco menor no local"<<endl;
                         cout<<"Deseja escolher outro pino ou outro disco?"<<endl;
-                        cout<<"1. PINO  2.DISCO"<<endl;
+                        cout<<"1. PINO  2.DISCO"<<endl;//da a escolha ao jogador de trocar o disco que ele deseja jogar, ou de apenas trocar o pino o qual deseja inserir o disco já escolhido
                             cin>>esco;
 
                         if(esco==2){
@@ -210,7 +210,7 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
 }
 
 
-int movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+int movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){//realiza o movimento do disco na versão NUMERICA
 
     int auxiLinha, auxiColuna, linha;
 
@@ -235,7 +235,7 @@ int movimento(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX
 }
 
 
-void removerDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+void removerDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){//Remove o disco do local original na versão CARACTERE
 
     int auxiLinha, auxiColuna, auxi;
 
@@ -252,7 +252,7 @@ void removerDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
 }
 
 
-void moveDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){
+void moveDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MAX], char Jogo[][MAX], char discos[][DisMAX]){//Coloca o disco no novo local na versão CARACTERE
 
     int linha, auxi, auxi2;
         linha=movimento(n, jogada, joColuna, discosNUM,JogoNUM, Jogo, discos);
@@ -269,7 +269,7 @@ void moveDisco(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[][MA
 }
 
 
-int vitoria(int n, int JogoNUM[][MAX]){
+int vitoria(int n, int JogoNUM[][MAX]){//Busca no jogo NUMERICO se todos os discos estão no último pino em ordem crescente para assim declarar vitória
 
     int valor;
     valor=0;
@@ -288,13 +288,13 @@ int vitoria(int n, int JogoNUM[][MAX]){
 
 
 int main (){
-    char Jogo[MAX][MAX], discos[DisMAX][DisMAX];
-    int n, jogada, joColuna, fimJogo;
-    int JogoNUM[MAX][MAX], discosNUM[DisMAX];
+    char Jogo[MAX][MAX], discos[DisMAX][DisMAX];//define o "tabuleiro" de CARACTERE, o qual o jogador ira visualizar o jogo inteiro
+    int n, jogada, joColuna, fimJogo;//variaveis de jogadas
+    int JogoNUM[MAX][MAX], discosNUM[DisMAX];//define o "tabuleiro" na versão NUMERICA, pois é mais prático para chegar condições de movimentação válida ou de condição de vitória
        for(int i=0; i<MAX; i++){
             for(int j=0; j<MAX; j++){
-                    Jogo[i][j]=' ';
-                    JogoNUM[i][j]=9;
+                    Jogo[i][j]=' ';//define todos os espaços vazios do "tabuleiro" de CARACTERE como um espaço 
+                    JogoNUM[i][j]=9;//define todos os espaços vazios do "tabuleiro" de numero como o numero 9
             }
         }
     cout<<"Quantos aneis serao inseridos para o jogo?( Obs: 7 e o MAX e 3 e o MIN)"<<endl;
