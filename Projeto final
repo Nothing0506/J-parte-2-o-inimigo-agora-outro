@@ -149,7 +149,7 @@ int verificarPino(int n, int jogada, int joColuna, int *discosNUM, int JogoNUM[]
 			cout<<"Pino invalido. Digite novamente"<<endl;
 			cin>>joColuna;
 			
-		}while(jogada>n || jogada<1);
+		}while(joColuna>3 || joColuna<1);
 		
 	}
 	
