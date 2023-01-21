@@ -1,0 +1,83 @@
+import pygame
+import os
+
+BACKGROUND=pygame.image.load(os.path.join('img jogo','background.png'))
+LARGURA=600
+ALTURA=400
+QUADRADO1=pygame.image.load(os.path.join('img jogo','teste 1.png'))
+QUADRADO2=pygame.image.load(os.path.join('img jogo','teste 2.png'))
+
+
+class Player:
+    IMG=QUADRADO1
+    LASER=QUADRADO2
+    def __init__(self,x,y):
+        self.x=x
+        self.y=y
+        self.velocidade=10
+    def mover_direita(self):
+        pos=self.velocidade
+        self.x+=pos
+    def mover_esquerda(self):
+        pos=-self.velocidade
+        self.x+=pos
+    def desenhar(self,tela):
+        tela.blit(self.IMG,(self.x,self.y))
+
+class Laser:
+    def __init__(self):
+        self.x=-10
+        self.y=-10
+        self.velocidade=-2
+        self.auxi=False
+
+    def mover(self,player):
+        self.x=player.x+10
+        self.y=player.y+10
+
+    def desenhar(self,tela):
+        tela.blit(QUADRADO2,(self.x,self.y))
+    def atualizar(self):
+        self.y+=self.velocidade
+
+def desenhar_tela(tela,player,lasers):
+    tela.blit(BACKGROUND,(0,0))
+    player.desenhar(tela)
+    for laser in lasers:
+        laser.desenhar(tela)
+    pygame.display.update()
+def main():
+    tela=pygame.display.set_mode((LARGURA,ALTURA))
+    player=Player(350,350)
+    lasers=[Laser()]
+    relogio=pygame.time.Clock()
+    rodando=True
+    while rodando:
+        adicionar_laser=False
+        relogio.tick(30)
+        for evento in pygame.event.get():
+            if evento.type==pygame.QUIT:
+                pygame.quit()
+                rodando=False
+                quit()
+            keys=pygame.key.get_pressed()
+            if keys[pygame.K_d]:
+                player.mover_direita()
+            if keys[pygame.K_a]:
+                player.mover_esquerda()
+            if evento.type==pygame.KEYDOWN:
+                if evento.key==pygame.K_SPACE:
+                    adicionar_laser=True
+        if adicionar_laser:
+            laser.auxi=True
+            lasers.append(Laser())
+            print(len(lasers))
+            for laser in lasers:
+                laser.mover(player)
+        for laser in lasers:
+            laser.atualizar()
+            laser.desenhar(tela)
+            pygame.display.update()
+        desenhar_tela(tela,player,lasers)
+if __name__ == '__main__':
+    main()
